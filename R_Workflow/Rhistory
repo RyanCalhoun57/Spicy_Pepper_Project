@@ -1,0 +1,169 @@
+library(edgeR)
+library(matrixStats)
+library(cowplot)
+if (!requireNamespace("BiocManager"))
+install.packages("BiocManager")
+BiocManager::install(c("limma", "edgeR", "Glimma", "org.Mm.eg.db", "gplots", "RColorBrewer", "NMF", "BiasedUrn"))
+#read file into R, did this one way by using read_csv to create a Raw_Pepper_data
+#file and did it the other way by clicking on the file and importing the data
+Raw_Pepper_Data <- read_csv ("genes_fpkm.csv")
+head(genes_fpkm)
+head(Raw_Pepper_Data)
+#Head and print can be used to view the files you have just created
+print(Raw_Pepper_Data)
+print(genes_fpkm)
+#Formatting data so it does not contain non numeric values except for pepper samples
+Raw_Pepper_Data_Matrix <- (Raw_Pepper_Data.df[-c(1:3)])
+head(Raw_Pepper_Data_Matrix)
+#list the column names
+colnames(Raw_Pepper_Data_Matrix)
+#clean up the column names
+colnames(Raw_Pepper_Data_Matrix) <- substr(colnames(Raw_Pepper_Data_Matrix),start=1,stop=19)
+view(Raw_Pepper_Data_Matrix)
+colSums(Raw_Pepper_Data_Matrix)
+#Make a DGElist for EdgeR
+Raw_Pepper_Data_List <- DGEList(Raw_Pepper_Data_Matrix)
+head(Raw_Pepper_Data_List)
+names(Raw_Pepper_Data_List)
+Raw_Pepper_Data_List$counts
+Raw_Pepper_Data_List$samples
+#read in spicy pepper information containing locus info, gene id, protein
+library(readr)
+Spicy_Pepper_cufflinks_information <- read_csv("Spicy_Pepper_cufflinks_information.csv")
+#removing a row to make the data match
+Cufflinks_information_removed_row <- Spicy_Pepper_cufflinks_information[-c(49),]
+view(Cufflinks_information_removed_row)
+group <- paste(Cufflinks_information_removed_row$Sample_ID,
+Cufflinks_information_removed_row$Pepper_Species,
+Cufflinks_information_removed_row$Pepper_Name,
+Cufflinks_information_removed_row$Tissue,
+Cufflinks_information_removed_row$Scoville, sep = ".")
+view(group)
+Raw_Pepper_Data_List$samples$group <- group
+head(Raw_Pepper_Data_List)
+Raw_Pepper_Data_List$samples
+library(readr)
+Spicy_Pepper_cufflinks_information <- read_csv("Gene_Information.csv")
+myCPM <- cpm(Raw_Pepper_Data_List)
+head(myCPM)
+head(Raw_Pepper_Data_List)
+thresh <- Raw_Pepper_Data_List > 0
+thresh <- Raw_Pepper_Data_Matrix > 0
+head(thresh)
+table(rowSums(thesh))
+table(rowSums(thresh))
+thresh2 <- Raw_Pepper_Data_Matrix = 0
+head(thresh2)
+table(rowSums(thresh2))
+ZeroValues <- Raw_Pepper_Data_Matrix = 0
+ZeroValues <- Raw_Pepper_Data_Matrix < 0
+thresh2 <- Raw_Pepper_Data_Matrix < 0
+head(thresh2)
+table(rowSums(thresh2))
+#List how many values are above zero for FPKM
+thresh <- Raw_Pepper_Data_Matrix > 0
+head(thresh)
+table(rowSums(thresh))
+threshtwo <- Raw_Pepper_Data_Matrix >= 0
+head(threshtwo)
+table(rowSums(treshtwo))
+table(rowSums(threshtwo))
+keep <- rowSums(thresh) >= 0.1
+summary(keep)
+plot(Raw_Pepper_Data_Matrix[,1],Raw_Pepper_Data_Matrix[,1])
+plot(Raw_Pepper_Data_Matrix,Raw_Pepper_Data_Matrix)
+Raw_Pepper_Data_Matrix$samples$lib.size
+Raw_Pepper_Data_List$samples$lib.size
+barplot(Raw_Pepper_Data_List$samples$lib.size,names=colnames(Raw_Pepper_Data_List),las=2)
+barplot(Raw_Pepper_Data_List$samples$lib.size,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+mtext(side = 1, text = "Samples", line = 4)
+mtext(side = 2, text = "Library size", line = 3)
+title("Barplot of Library Sizes")
+barplot(Raw_Pepper_Data_List$samples$lib.size,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size/6e06,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+keep$samples$lib.size
+barplot(Raw_Pepper_Data_List$samples$lib.size/8e06,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size/8e08,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size/1e08,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size/10,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size/10^8,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size/1000000,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size/10000000,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size/20000000,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size/2000000,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size/6000000,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size/6500000,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size/7500000,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size/860000,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size/850000,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size/950000,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size/955000,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size/655000,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size/355000,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+barplot(Raw_Pepper_Data_List$samples$lib.size,names=colnames(Raw_Pepper_Data_List),las=2, ann=FALSE, cex.names=0.75)
+u
+logcounts <- log(Raw_Pepper_Data_Matrix, 2)
+view(logcounts)
+boxplot(logcounts, xlab="", ylab="Log2 FPKM",las=2)
+l
+plotMDS(logcounts)
+#Multidimensional analysis of our pepper samples log2 data
+plotMDS(Raw_Pepper_Data_Matrix)
+levels(Cufflinks_information_removed_row$Sample_ID)
+levels(Cufflinks_information_removed_row$Sample_ID)
+group <- factor(group)
+levels(Cufflinks_information_removed_row$Sample_ID)
+levels(Cufflinks_information_removed_row$Pepper_Name)
+levels(Cufflinks_information_removed_row$Pepper_Species)
+levels(Cufflinks_information_removed_row$Scoville)
+group <- paste(Cufflinks_information_removed_row$Sample_ID,
+Cufflinks_information_removed_row$Pepper_Species,
+Cufflinks_information_removed_row$Pepper_Name,
+Cufflinks_information_removed_row$Tissue,
+Cufflinks_information_removed_row$Scoville, sep = ".")
+Raw_Pepper_Data_List$samples$group <- group
+head(Raw_Pepper_Data_List)
+Raw_Pepper_Data_List$samples
+levels(Cufflinks_information_removed_row$Sample_ID)
+levels(Cufflinks_information_removed_row$Pepper_Species)
+col.cell <- c("green","pink")[Cufflinks_information_removed_row$Pepper_Species]
+data.frame(Cufflinks_information_removed_row$Pepper_Species,col.cell)
+plotMDS(Raw_Pepper_Data_Matrix, col=col.cell)
+plotMDS(logcounts, col=col.cell)
+levels(Raw_Pepper_Data_List$samples)
+levels(Raw_Pepper_Data_List$counts)
+levels(Raw_Pepper_Data$Protein_Function)
+levels(Cufflinks_information_removed_row$Sample_ID)
+levels(Cufflinks_information_removed_row$Pepper_Species)
+levels(Cufflinks_information_removed_row$Pepper_Name)
+levels(Cufflinks_information_removed_row$Tissue)
+levels(Cufflinks_information_removed_row$Scoville)
+par(mfrow=c(1,2))
+levels(Cufflinks_information_removed_row$Sample_ID)
+levels(Cufflinks_information_removed_row$Pepper_Species)
+levels(Cufflinks_information_removed_row$Pepper_Name)
+levels(Cufflinks_information_removed_row$Tissue)
+levels(Cufflinks_information_removed_row$Scoville)
+col.cell <- c("green","pink")[Cufflinks_information_removed_row$Pepper_Species]
+data.frame(Cufflinks_information_removed_row$Pepper_Species,col.cell)
+plotMDS(logcounts, col=col.cell)
+group <- factor(paste(Cufflinks_information_removed_row$Sample_ID,
+Cufflinks_information_removed_row$Pepper_Species,
+Cufflinks_information_removed_row$Pepper_Name,
+Cufflinks_information_removed_row$Tissue,
+Cufflinks_information_removed_row$Scoville, sep="."))
+Cufflinks_information_removed_row$samples$group <- group
+levels(Cufflinks_information_removed_row$Pepper_Species)
+col.cell <- c("green","pink")[Cufflinks_information_removed_row$Pepper_Species]
+data.frame(Cufflinks_information_removed_row$Pepper_Species,col.cell)
+plotMDS(logcounts, col=col.cell)
+par(mfrow=c(1,2))
+levels(Cufflinks_information_removed_row$Sample_ID)
+levels(Cufflinks_information_removed_row$Pepper_Species)
+levels(Cufflinks_information_removed_row$Pepper_Name)
+levels(Cufflinks_information_removed_row$Tissue)
+levels(Cufflinks_information_removed_row$Scoville)
+var_genes <- apply(logcounts, 1, var)
+head(var_genes)
+select_variation <- names(sort(var_genes,decreasing = TRUE))[1:500]
+head(select_variation)
