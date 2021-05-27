@@ -1,49 +1,49 @@
-﻿Sample_ID,Pepper_Species,Pepper_Name,Tissue,Scoville
-HabP1_R1_001,Capsicum chinense,Habanero,Placenta,"100,000-350,000"
-HabP1_R2_001,Capsicum chinense,Habanero,Placenta,"100,000-350,000"
-JalP1_R1_001,Capsicum annuum,Jalapeno,Placenta,"3,500-8,000"
-JalP1_R2_001,Capsicum annuum,Jalapeno,Placenta,"3,500-8,000"
-SerP1_R1_001,Capsicum annuum,Serrano,Placenta,"10,000-23,000"
-SerP1_R2_001,Capsicum annuum,Serrano,Placenta,"10,000-23,000"
-WaxP1_R1_001,Capsicum annuum,Hungarian Wax,Placenta,"5,000-15,000"
-WaxP1_R2_001,Capsicum annuum,Hungarian Wax,Placenta,"5,000-15,000"
-CheP1-LCL3435_L3_R1_001,Capsicum annuum,Cherry,Placenta,100-500
-CheP1-LCL3435_L3_R2_001,Capsicum annuum,Cherry,Placenta,100-500
-CheP2-LCL3437_L3_R1_001,Capsicum annuum,Cherry,Placenta,100-500
-CheP2-LCL3437_L3_R2_001,Capsicum annuum,Cherry,Placenta,100-500
-CheS1-LCL3434_L3_R1_001,Capsicum annuum,Cherry,Skin,100-500
-CheS1-LCL3434_L3_R2_001,Capsicum annuum,Cherry,Skin,100-500
-CheS2-LCL3436_L3_R1_001,Capsicum annuum,Cherry,Skin,100-500
-CheS2-LCL3436_L3_R2_001,Capsicum annuum,Cherry,Skin,100-500
-GhoP1-LCL3453_L3_R1_001,Capsicum chinense,Ghost,Placenta,"800,000-1,000,000"
-GhoP1-LCL3453_L3_R2_001,Capsicum chinense,Ghost,Placenta,"800,000-1,000,000"
-GhoS1-LCL3452_L3_R1_001,Capsicum chinense,Ghost,Skin,"800,000-1,000,000"
-GhoS1-LCL3452_L3_R2_001,Capsicum chinense,Ghost,Skin,"800,000-1,000,000"
-HabP2-LCL3451_L3_R1_001,Capsicum chinense,Habanero,Placenta,"100,000-350,000"
-HabP2-LCL3451_L3_R2_001,Capsicum chinense,Habanero,Placenta,"100,000-350,000"
-HabS1-LCL3448_L3_R1_001,Capsicum chinense,Habanero,Skin,"100,000-350,000"
-HabS1-LCL3448_L3_R2_001,Capsicum chinense,Habanero,Skin,"100,000-350,000"
-HabS2-LCL3450_L3_R1_001,Capsicum chinense,Habanero,Skin,"100,000-350,000"
-HabS2-LCL3450_L3_R2_001,Capsicum chinense,Habanero,Skin,"100,000-350,000"
-JalS1-LCL3442_L3_R1_001,Capsicum annuum,Jalapeno,Skin,"3,500-8,000"
-JalS1-LCL3442_L3_R2_001,Capsicum annuum,Jalapeno,Skin,"3,500-8,000"
-LoHP2-LCL3431_L3_R1_001,Capsicum annuum,Cayenne,Placenta,"30,000-50,000"
-LoHP2-LCL3431_L3_R2_001,Capsicum annuum,Cayenne,Placenta,"30,000-50,000"
-LoHP3-LCL3433_L3_R1_001,Capsicum annuum,Cayenne,Placenta,"30,000-50,000"
-LoHP3-LCL3433_L3_R2_001,Capsicum annuum,Cayenne,Placenta,"30,000-50,000"
-LoHS1-LCL3430_L3_R1_001,Capsicum annuum,Cayenne,Skin,"30,000-50,000"
-LoHS1-LCL3430_L3_R2_001,Capsicum annuum,Cayenne,Skin,"30,000-50,000"
-LoHS3-LCL3432_L3_R1_001,Capsicum annuum,Cayenne,Skin,"30,000-50,000"
-LoHS3-LCL3432_L3_R2_001,Capsicum annuum,Cayenne,Skin,"30,000-50,000"
-SerP2-LCL3447_L3_R1_001,Capsicum annuum,Serrano,Placenta,"10,000-23,000"
-SerP2-LCL3447_L3_R2_001,Capsicum annuum,Serrano,Placenta,"10,000-23,000"
-SerS1-LCL3444_L3_R1_001,Capsicum annuum,Serrano,Skin,"10,000-23,000"
-SerS1-LCL3444_L3_R2_001,Capsicum annuum,Serrano,Skin,"10,000-23,000"
-SerS2-LCL3446_L3_R1_001,Capsicum annuum,Serrano,Skin,"10,000-23,000"
-SerS2-LCL3446_L3_R2_001,Capsicum annuum,Serrano,Skin,"10,000-23,000"
-WaxP2-LCL3441_L3_R1_001,Capsicum annuum,Hungarian Wax,Placenta,"5,000-15,000"
-WaxP2-LCL3441_L3_R2_001,Capsicum annuum,Hungarian Wax,Placenta,"5,000-15,000"
-WaxS1-LCL3438_L3_R1_001,Capsicum annuum,Hungarian Wax,Skin,"5,000-15,000"
-WaxS1-LCL3438_L3_R2_001,Capsicum annuum,Hungarian Wax,Skin,"5,000-15,000"
-WaxS2-LCL3440_L3_R1_001,Capsicum annuum,Hungarian Wax,Skin,"5,000-15,000"
-WaxS2-LCL3440_L3_R2_001,Capsicum annuum,Hungarian Wax,Skin,"5,000-15,000"
+﻿Sample_ID,Pepper_Species,Pepper_Name,Tissue,Scoville,Mapped_Reads
+HabP1_R1_001,Capsicum chinense,Habanero,Placenta,"100,000-350,000",14763141
+HabP1_R2_001,Capsicum chinense,Habanero,Placenta,"100,000-350,000",14763141
+JalP1_R1_001,Capsicum annuum,Jalapeno,Placenta,"3,500-8,000",11125888
+JalP1_R2_001,Capsicum annuum,Jalapeno,Placenta,"3,500-8,000",11125888
+SerP1_R1_001,Capsicum annuum,Serrano,Placenta,"10,000-23,000",10726756
+SerP1_R2_001,Capsicum annuum,Serrano,Placenta,"10,000-23,000",10726756
+WaxP1_R1_001,Capsicum annuum,Hungarian Wax,Placenta,"5,000-15,000",11919407
+WaxP1_R2_001,Capsicum annuum,Hungarian Wax,Placenta,"5,000-15,000",11919407
+CheP1.LCL3435_L3_R1_001,Capsicum annuum,Cherry,Placenta,100-500,23484657
+CheP1.LCL3435_L3_R2_001,Capsicum annuum,Cherry,Placenta,100-500,23484657
+CheP2.LCL3437_L3_R1_001,Capsicum annuum,Cherry,Placenta,100-500,21190053
+CheP2.LCL3437_L3_R2_001,Capsicum annuum,Cherry,Placenta,100-500,21190053
+CheS1.LCL3434_L3_R1_001,Capsicum annuum,Cherry,Skin,100-500,21572667
+CheS1.LCL3434_L3_R2_001,Capsicum annuum,Cherry,Skin,100-500,21572667
+CheS2.LCL3436_L3_R1_001,Capsicum annuum,Cherry,Skin,100-500,26158836
+CheS2.LCL3436_L3_R2_001,Capsicum annuum,Cherry,Skin,100-500,26158836
+GhoP1.LCL3453_L3_R1_001,Capsicum chinense,Ghost,Placenta,"800,000-1,000,000",23337251
+GhoP1.LCL3453_L3_R2_001,Capsicum chinense,Ghost,Placenta,"800,000-1,000,000",23337251
+GhoS1.LCL3452_L3_R1_001,Capsicum chinense,Ghost,Skin,"800,000-1,000,000",24019919
+GhoS1.LCL3452_L3_R2_001,Capsicum chinense,Ghost,Skin,"800,000-1,000,000",24019919
+HabP2.LCL3451_L3_R1_001,Capsicum chinense,Habanero,Placenta,"100,000-350,000",28508867
+HabP2.LCL3451_L3_R2_001,Capsicum chinense,Habanero,Placenta,"100,000-350,000",28508867
+HabS1.LCL3448_L3_R1_001,Capsicum chinense,Habanero,Skin,"100,000-350,000",43670172
+HabS1.LCL3448_L3_R2_001,Capsicum chinense,Habanero,Skin,"100,000-350,000",43670172
+HabS2.LCL3450_L3_R1_001,Capsicum chinense,Habanero,Skin,"100,000-350,000",24974561
+HabS2.LCL3450_L3_R2_001,Capsicum chinense,Habanero,Skin,"100,000-350,000",24974561
+JalS1.LCL3442_L3_R1_001,Capsicum annuum,Jalapeno,Skin,"3,500-8,000",29570871
+JalS1.LCL3442_L3_R2_001,Capsicum annuum,Jalapeno,Skin,"3,500-8,000",29570871
+CayP2.LCL3431_L3_R1_001,Capsicum annuum,Cayenne,Placenta,"30,000-50,000",36497860
+CayP2.LCL3431_L3_R2_001,Capsicum annuum,Cayenne,Placenta,"30,000-50,000",36497860
+CayP3.LCL3433_L3_R1_001,Capsicum annuum,Cayenne,Placenta,"30,000-50,000",24194123
+CayP3.LCL3433_L3_R2_001,Capsicum annuum,Cayenne,Placenta,"30,000-50,000",24194123
+CayS1.LCL3430_L3_R1_001,Capsicum annuum,Cayenne,Skin,"30,000-50,000",38894077
+CayS1.LCL3430_L3_R2_001,Capsicum annuum,Cayenne,Skin,"30,000-50,000",38894077
+CayS3.LCL3432_L3_R1_001,Capsicum annuum,Cayenne,Skin,"30,000-50,000",27161008
+CayS3.LCL3432_L3_R2_001,Capsicum annuum,Cayenne,Skin,"30,000-50,000",27161008
+SerP2.LCL3447_L3_R1_001,Capsicum annuum,Serrano,Placenta,"10,000-23,000",24784833
+SerP2.LCL3447_L3_R2_001,Capsicum annuum,Serrano,Placenta,"10,000-23,000",24784833
+SerS1.LCL3444_L3_R1_001,Capsicum annuum,Serrano,Skin,"10,000-23,000",22844238
+SerS1.LCL3444_L3_R2_001,Capsicum annuum,Serrano,Skin,"10,000-23,000",22844238
+SerS2.LCL3446_L3_R1_001,Capsicum annuum,Serrano,Skin,"10,000-23,000",22619962
+SerS2.LCL3446_L3_R2_001,Capsicum annuum,Serrano,Skin,"10,000-23,000",22619962
+WaxP2.LCL3441_L3_R1_001,Capsicum annuum,Hungarian Wax,Placenta,"5,000-15,000",36568034
+WaxP2.LCL3441_L3_R2_001,Capsicum annuum,Hungarian Wax,Placenta,"5,000-15,000",36568034
+WaxS1.LCL3438_L3_R1_001,Capsicum annuum,Hungarian Wax,Skin,"5,000-15,000",34413102
+WaxS1.LCL3438_L3_R2_001,Capsicum annuum,Hungarian Wax,Skin,"5,000-15,000",34413102
+WaxS2.LCL3440_L3_R1_001,Capsicum annuum,Hungarian Wax,Skin,"5,000-15,000",24130946
+WaxS2.LCL3440_L3_R2_001,Capsicum annuum,Hungarian Wax,Skin,"5,000-15,000",24130946
