@@ -3,12 +3,7 @@ library(tidyverse)
 library(edgeR)
 library(matrixStats)
 library(cowplot)
-
-if (!requireNamespace("BiocManager"))
-  install.packages("BiocManager")
-BiocManager::install(c("limma", "edgeR", "Glimma", "org.Mm.eg.db", "gplots", "RColorBrewer", "NMF", "BiasedUrn"))
-
-
+library(BiocManager)
 
 #read file into R, did this one way by using read_csv to create a Raw_Pepper_data
 #file and did it the other way by clicking on the file and importing the data
