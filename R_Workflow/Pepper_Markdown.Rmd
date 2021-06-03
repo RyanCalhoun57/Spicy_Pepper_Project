@@ -1,0 +1,129 @@
+---
+title: "Pepper_Markdown"
+author: "Ryan Calhoun"
+date: "6/3/2021"
+output: 
+  html_document:
+    theme: paper
+    highlight: zenburn
+    center: TRUE
+
+editor_options: 
+  chunk_output_type: console
+  
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(RColorBrewer)
+
+setwd("/Users/Caronelab/Desktop/Spicy_Pepper_Project/R_Workflow")
+#setwd()
+
+```
+
+## Loading in Raw Data
+  Here we imported **all** of the raw data before _tidying_ it. All functions were performed utilizing the default **Tidyverse** package!
+  
+```{r Loading in Data}
+
+genes_fpkm <- read.csv ("genes_fpkm.csv") #Reading in FPKM Values
+protein_data <- read.csv("Spicy_Pepper_cufflinks_information.csv") #Pepper information
+
+```
+
+## Tidying the Raw Data
+
+```{r Tidying the Data}
+
+tidy_fpkm <- genes_fpkm %>%
+  pivot_longer(cols = 4:51,
+               names_to = "Sample_ID",
+               values_to = "FPKM") #Shrink dataframe width by creating 'Sample ID' col
+
+final_tidy <- tidy_fpkm %>%
+  full_join(protein_data,
+             by = "Sample_ID") %>%
+  rename(c(Locus = locus,
+           Gene_ID = genes_fpkm_with_protein_charact)) 
+#Add pepper information to tidied dataset, rename cols to make working w data easier
+
+trimmed_tidy <- final_tidy %>%
+  mutate(Sample_ID = str_sub(Sample_ID, 1, -5)) %>%
+  mutate(Forward = str_detect(Sample_ID, "R1")) %>%
+  mutate(Direction = case_when(Forward == TRUE ~ "Forward",
+                               Forward == FALSE ~ "Reverse")) %>%
+  select(-Forward) %>%
+  mutate(Sample_ID = str_sub(Sample_ID,1, 5))
+
+```
+
+##Creating bar graph of Mapped Libraries
+  Creating a bar graph to visualize the different size of mapped reads across the samples
+
+```{r Bar Graph of Mapped Reads}
+
+  trimmed_tidy %>%
+  filter(Direction == "Forward") %>%
+  ggplot(aes(x = Sample_ID, y = Mapped_Reads, fill = Pepper_Name)) +
+  geom_col() + theme_bw() +
+  scale_fill_brewer(palette = "Accent") +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+  labs(x = "Sample ID", y = "Mapped Reads", fill = "Pepper Name", title = "Mapped Reads per Sample")
+  
+
+```
+
+
+##Creating Box Plot of FPKM values
+
+```{r Box Plot of FPKM values}
+#Creating a box plot to visualize the FPKM values plotted against their Sample IDs
+
+  
+
+
+```
+
+##Creating PCAs for Pepper Samples
+
+```{r PCA of Pepper Samples}
+#Creating a PCA plot for the FPKM values against the different sample IDs
+
+#Creating a PCA plot for the skin vs placenta tissue
+
+#Creating a PCA plot for the Capsicum annuum vs Capsicum chinense species
+
+#Creating a PCA plot for the scoville scale for the different peppers
+
+
+
+
+```
+
+##Creating Scatterplot of FPKM Values
+
+```{r Scatterplot of FPKM values}
+#Creating a scatter plot that plots the FPKM values for a forward run sample against its reverse run counterpart
+
+
+
+
+
+
+
+```
+
+##Creating HeatMap for Pepper samples
+
+```{r HeatMap of FPKM values}
+#Creating a heatmap to show the top highly expressed genes utilizing their FPKM values
+
+
+
+
+
+
+```

@@ -4,16 +4,16 @@ library(tidyverse) #Loading in the Tidyverse suite
 library(RColorBrewer)
 
 #set the working directory
-setwd("~/Spicy_Pepper_Project/R_Workflow")
+#setwd("~/Spicy_Pepper_Project/R_Workflow")
 
 genes_fpkm <- read.csv ("genes_fpkm.csv") #Reading in FPKM Values
 protein_data <- read.csv("Spicy_Pepper_cufflinks_information.csv") #Pepper information
 
-genes_fpkm <- genes_fpkm %>%
-  rename(c("genes_fpkm_with_protein_charact" = "ï..genes_fpkm_with_protein_charact"))
-
-protein_data <- protein_data %>%
-  rename(c("Sample_ID" = "ï..Sample_ID"))
+# genes_fpkm <- genes_fpkm %>%
+#   rename(c("genes_fpkm_with_protein_charact" = "ï..genes_fpkm_with_protein_charact"))
+# 
+# protein_data <- protein_data %>%
+#   rename(c("Sample_ID" = "ï..Sample_ID"))
 
 
 tidy_fpkm <- genes_fpkm %>%
@@ -47,7 +47,7 @@ Library_data <- protein_data %>%
 ggplot(data=Library_data) + 
   geom_col(aes(x=Sample_ID, y=Mapped_Reads), color='black', fill='yellow')+
   labs(x = "Pepper Sample", y = "Number of Mapped Reads", title = "Total Number of Mapped Reads for each Pepper Sample") +
-  theme_bw() +
+  theme() +
   theme_minimal()
 
 #Creating a matrix with just the pepper samples and FPKM values
