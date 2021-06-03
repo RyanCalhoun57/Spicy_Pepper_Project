@@ -18,6 +18,7 @@ knitr::opts_chunk$set(echo = TRUE)
 
 library(tidyverse)
 library(RColorBrewer)
+library(lattice)
 
 setwd("/Users/Caronelab/Desktop/Spicy_Pepper_Project/R_Workflow")
 #setwd()
@@ -78,11 +79,19 @@ trimmed_tidy <- final_tidy %>%
 
 
 ##Creating Box Plot of FPKM values
+##Creating a box plot to visualize the FPKM values plotted against their Sample IDs
 
 ```{r Box Plot of FPKM values}
-#Creating a box plot to visualize the FPKM values plotted against their Sample IDs
 
-  
+trimmed_tidy %>%
+select(Sample_ID, FPKM, Pepper_Name) %>%
+ggplot(aes(x=Sample_ID, y=FPKM, color = Pepper_Name)) +
+geom_boxplot() +
+#stat_boxplot(geom = 'errorbar') +
+theme_bw() +
+scale_fill_brewer(palette = "Dark2") +
+theme(axis.text.x = element_text(angle = 45, hjust = 1)) +
+labs(x = "Sample ID", y = "FPKM", fill = "Pepper Name", title = "Gene FPKM Values per Pepper Sample")
 
 
 ```
@@ -104,15 +113,26 @@ trimmed_tidy <- final_tidy %>%
 ```
 
 ##Creating Scatterplot of FPKM Values
+##Creating a scatter plot that plots the FPKM values for a forward run sample against its reverse run counterpart
 
 ```{r Scatterplot of FPKM values}
-#Creating a scatter plot that plots the FPKM values for a forward run sample against its reverse run counterpart
 
+viewHab_scatter <- splom(genes_fpkm[c(4,5,24,25,26,27,28,29)])
 
+Jal_scatter <- splom(genes_fpkm[c(6,7,30,31)])
 
+Che_scatter <- splom(genes_fpkm[c(12,13,14,15,16,17,18,19)])
 
+Ser_scatter <- splom(genes_fpkm[c(8,9,40,41,42,43,44,45)])
 
+Gho_scatter <- splom(genes_fpkm[c(20,21,22,23)])
 
+Wax_scatter <- splom(genes_fpkm[c(10,11,46,47,48,49,50,51)])
+  
+Cay_scatter <- splom(genes_fpkm[c(32,33,34,35,36,37,38,39)])
+
+#https://www.statmethods.net/advgraphs/trellis.html
+  
 
 ```
 
