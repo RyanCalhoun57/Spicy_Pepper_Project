@@ -19,6 +19,8 @@ knitr::opts_chunk$set(echo = TRUE)
 library(tidyverse)
 library(RColorBrewer)
 library(lattice)
+library(patchwork)
+library(corrplot)
 
 
 setwd("/Users/Caronelab/Desktop/Spicy_Pepper_Project/R_Workflow")
@@ -112,8 +114,42 @@ trimmed_tidy %>%
 
 #Creating a PCA plot for the scoville scale for the different peppers
 
+splom_data %>%
+  select(-c(1:3)) %>%
+  scale() %>%
+  prcomp() -> pepper_pca
+
+pepper_pca$rotation
+
+as_tibble(pepper_pca$rotation) %>%
+  mutate(Row_N = row_number()) %>%
+  ggplot(aes(x = PC1, y = PC2, color = ifelse(Row_N == c(1:12), "red", "black"))) +
+  geom_point() +
+  theme_bw()
+
+as_tibble(pepper_pca$rotation) %>%
+  mutate(Row_N = row_number()) %>%
+  ggplot(aes(x = PC2, y = PC3, color = ifelse(Row_N == c(1:12), "red", "black"))) +
+  geom_point() +
+  theme_bw() 
+
+as_tibble(pepper_pca$rotation) %>%
+  mutate(Row_N = row_number()) %>%
+  ggplot(aes(x = PC1, y = PC3, color = ifelse(Row_N == c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), "red", "black"))) +
+  geom_point() +
+  theme_bw()
 
 
+PC1_PC2 + PC2_PC3 + PC1_PC3
+
+var_explained = pepper_pca$sdev^2 / sum(pepper_pca$sdev^2)
+
+qplot(c(1:48), var_explained) + 
+  geom_line() + 
+  xlab("Principal Component") + 
+  ylab("Variance Explained") +
+  ggtitle("Scree Plot") +
+  ylim(0, 1)
 
 ```
 
@@ -125,15 +161,33 @@ trimmed_tidy %>%
 log2_splom_data <- log2(splom_data[c(4:51)])
 
   Che_scatter <- splom(log2_splom_data[c(9,10,11,12,13,14,15,16)],
-                       par.settings = simpleTheme(col="red"),
+                       par.settings = simpleTheme(col="darkseagreen4"),
                        pch = 20)
 
-  Hab_scatter <- splom(log2_splom_data[c(1,2,21,22,23,24,25,26)])
-  Jal_scatter <- splom(log2_splom_data[c(3,4,27,28)])
-  Ser_scatter <- splom(log2_splom_data[c(5,6,37,38,39,40,41,42)])
-  Gho_scatter <- splom(log2_splom_data[c(17,18,19,20)])
-  Wax_scatter <- splom(log2_splom_data[c(7,8,43,44,45,46,47,48)])
-  Cay_scatter <- splom(log2_splom_data[c(29,30,31,32,33,34,35,36)])
+  Hab_scatter <- splom(log2_splom_data[c(1,2,21,22,23,24,25,26)],
+                       par.settings = simpleTheme(col="goldenrod1"),
+                       pch = 20)
+  
+  
+  Jal_scatter <- splom(log2_splom_data[c(3,4,27,28)],
+                       par.settings = simpleTheme(col="cyan4"),
+                       pch = 20)
+  
+  Ser_scatter <- splom(log2_splom_data[c(5,6,37,38,39,40,41,42)],
+                       par.settings = simpleTheme(col="magenta4"),
+                       pch = 20)
+  
+  Gho_scatter <- splom(log2_splom_data[c(17,18,19,20)],
+                       par.settings = simpleTheme(col="sienna"),
+                       pch = 20)
+  
+  Wax_scatter <- splom(log2_splom_data[c(7,8,43,44,45,46,47,48)],
+                       par.settings = simpleTheme(col="deeppink4"),
+                       pch = 20)
+  
+  Cay_scatter <- splom(log2_splom_data[c(29,30,31,32,33,34,35,36)],
+                       par.settings = simpleTheme(col="burlywood4"),
+                       pch = 20)
   
   Che_scatter
 
@@ -157,5 +211,25 @@ log2_splom_data <- log2(splom_data[c(4:51)])
 
 
 ```
+
+
+
+###Corrplot for Pepper Samples
+
+```{r Corrplot}
+
+
+log2_splom_data <- log2(splom_data[c(4:51)])
+
+log2_splom_data %>%
+  select(-c(1:3)) %>%
+  cor() %>%
+  corrplot(order = "hclust")
+
+
+```
+
+
+
 
 
