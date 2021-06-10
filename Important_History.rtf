@@ -1,0 +1,520 @@
+{\rtf1\ansi\ansicpg1252\cocoartf2513
+\cocoatextscaling0\cocoaplatform0{\fonttbl\f0\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww10800\viewh8400\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs24 \cf0 col = ryan_pal3(6))\
+#corrplot.mixed(tl.col = "black", tl.cex = .25, lower.col="black", number.cex = .25)\
+# log2_splom_data %>%\
+#   select(-c(1:3)) %>%\
+#   cor() %>%\
+#   corrplot(method = "shade", order = "hclust")\
+#\
+# log2_splom_data %>%\
+#   select(-c(1:3)) %>%\
+#   cor() %>%\
+#   corrplot(order = "hclust")\
+log2_splom_data <- log2(splom_data_zeros_removed[c(4:51)])\
+ryan_pal <- colorRampPalette(c("#7FD1B9", "#AAE5D3", "#CEF0E6", "#E7F6F7"))\
+ryan_pal2 <- colorRampPalette(c("#E7F6F7", "#CEF0E6", "#AAE5D3", "#7FD1B9"))\
+ryan_pal3 <- colorRampPalette(c( "#84dcc6","#d6edff","#acd7ec","#8b95c9","#478978"))\
+log2_splom_data %>%\
+select(-c(1:3)) %>%\
+cor() %>%\
+corrplot(order = "hclust",\
+method = "square",\
+addrect = 8,\
+rect.col = "magenta4",\
+tl.cex =.75,\
+cl.ratio = 0.1,\
+cl.cex = 1,\
+tl.col = "black",\
+tl.srt = 90,\
+bg = "white",\
+cl.lim = c(0,1),\
+is.corr = F,\
+col = ryan_pal3(6))\
+#corrplot.mixed(tl.col = "black", tl.cex = .25, lower.col="black", number.cex = .25)\
+# log2_splom_data %>%\
+#   select(-c(1:3)) %>%\
+#   cor() %>%\
+#   corrplot(method = "shade", order = "hclust")\
+#\
+# log2_splom_data %>%\
+#   select(-c(1:3)) %>%\
+#   cor() %>%\
+#   corrplot(order = "hclust")\
+log2_splom_data <- log2(splom_data_zeros_removed[c(4:51)])\
+ryan_pal <- colorRampPalette(c("#7FD1B9", "#AAE5D3", "#CEF0E6", "#E7F6F7"))\
+ryan_pal2 <- colorRampPalette(c("#E7F6F7", "#CEF0E6", "#AAE5D3", "#7FD1B9"))\
+ryan_pal3 <- colorRampPalette(c( "#84dcc6","#d6edff","#acd7ec","#8b95c9","#478978"))\
+log2_splom_data %>%\
+select(-c(1:3)) %>%\
+cor() %>%\
+corrplot(order = "hclust",\
+method = "square",\
+addrect = 8,\
+rect.col = "magenta4",\
+tl.cex =.5,\
+cl.ratio = 0.1,\
+cl.cex = 1,\
+tl.col = "black",\
+tl.srt = 90,\
+bg = "white",\
+cl.lim = c(0,1),\
+is.corr = F,\
+col = ryan_pal3(6))\
+log2_splom_data <- log2(splom_data_zeros_removed[c(4:51)])\
+ryan_pal <- colorRampPalette(c("#7FD1B9", "#AAE5D3", "#CEF0E6", "#E7F6F7"))\
+ryan_pal2 <- colorRampPalette(c("#E7F6F7", "#CEF0E6", "#AAE5D3", "#7FD1B9"))\
+ryan_pal3 <- colorRampPalette(c( "#84dcc6","#d6edff","#acd7ec","#8b95c9","#478978"))\
+log2_splom_data %>%\
+select(-c(1:3)) %>%\
+cor() %>%\
+corrplot(order = "hclust",\
+method = "square",\
+addrect = 8,\
+rect.col = "magenta4",\
+tl.cex =.75,\
+cl.ratio = 0.1,\
+cl.cex = 0.5,\
+tl.col = "black",\
+tl.srt = 90,\
+bg = "white",\
+cl.lim = c(0,1),\
+is.corr = F,\
+col = ryan_pal3(6))\
+log2_splom_data <- log2(splom_data_zeros_removed[c(4:51)])\
+ryan_pal <- colorRampPalette(c("#7FD1B9", "#AAE5D3", "#CEF0E6", "#E7F6F7"))\
+ryan_pal2 <- colorRampPalette(c("#E7F6F7", "#CEF0E6", "#AAE5D3", "#7FD1B9"))\
+ryan_pal3 <- colorRampPalette(c( "#84dcc6","#d6edff","#acd7ec","#8b95c9","#478978"))\
+log2_splom_data %>%\
+select(-c(1:3)) %>%\
+cor() %>%\
+corrplot(order = "hclust",\
+method = "square",\
+addrect = 8,\
+rect.col = "magenta4",\
+tl.cex =.75,\
+cl.ratio = 0.1,\
+cl.cex = 1.5,\
+tl.col = "black",\
+tl.srt = 90,\
+bg = "white",\
+cl.lim = c(0,1),\
+is.corr = F,\
+col = ryan_pal3(6))\
+log2_splom_data <- log2(splom_data_zeros_removed[c(4:51)])\
+ryan_pal <- colorRampPalette(c("#7FD1B9", "#AAE5D3", "#CEF0E6", "#E7F6F7"))\
+ryan_pal2 <- colorRampPalette(c("#E7F6F7", "#CEF0E6", "#AAE5D3", "#7FD1B9"))\
+ryan_pal3 <- colorRampPalette(c( "#84dcc6","#d6edff","#acd7ec","#8b95c9","#478978"))\
+log2_splom_data %>%\
+select(-c(1:3)) %>%\
+cor() %>%\
+corrplot(order = "hclust",\
+method = "square",\
+addrect = 8,\
+rect.col = "magenta4",\
+tl.cex =.75,\
+cl.ratio = 0.1,\
+cl.cex = 1,\
+tl.col = "black",\
+tl.srt = 90,\
+bg = "white",\
+cl.lim = c(0,1),\
+is.corr = F,\
+col = ryan_pal3(6))\
+log2_splom_data <- log2(splom_data_zeros_removed[c(4:51)])\
+ryan_pal <- colorRampPalette(c("#7FD1B9", "#AAE5D3", "#CEF0E6", "#E7F6F7"))\
+ryan_pal2 <- colorRampPalette(c("#E7F6F7", "#CEF0E6", "#AAE5D3", "#7FD1B9"))\
+ryan_pal3 <- colorRampPalette(c( "#84dcc6","#d6edff","#acd7ec","#8b95c9","#478978"))\
+log2_splom_data %>%\
+select(-c(1:3)) %>%\
+cor() %>%\
+corrplot(order = "hclust",\
+method = "square",\
+addrect = 8,\
+rect.col = "magenta4",\
+tl.cex =.75,\
+cl.ratio = 0.1,\
+cl.cex = 1,\
+cl.pos = 0.8,\
+tl.col = "black",\
+tl.srt = 90,\
+bg = "white",\
+cl.lim = c(0,1),\
+is.corr = F,\
+col = ryan_pal3(6))\
+log2_splom_data <- log2(splom_data_zeros_removed[c(4:51)])\
+ryan_pal <- colorRampPalette(c("#7FD1B9", "#AAE5D3", "#CEF0E6", "#E7F6F7"))\
+ryan_pal2 <- colorRampPalette(c("#E7F6F7", "#CEF0E6", "#AAE5D3", "#7FD1B9"))\
+ryan_pal3 <- colorRampPalette(c( "#84dcc6","#d6edff","#acd7ec","#8b95c9","#478978"))\
+log2_splom_data %>%\
+select(-c(1:3)) %>%\
+cor() %>%\
+corrplot(order = "hclust",\
+method = "square",\
+addrect = 8,\
+rect.col = "magenta4",\
+tl.cex =.75,\
+cl.ratio = 0.1,\
+cl.cex = 1,\
+cl.offset = 0.8,\
+tl.col = "black",\
+tl.srt = 90,\
+bg = "white",\
+cl.lim = c(0,1),\
+is.corr = F,\
+col = ryan_pal3(6))\
+log2_splom_data <- log2(splom_data_zeros_removed[c(4:51)])\
+ryan_pal <- colorRampPalette(c("#7FD1B9", "#AAE5D3", "#CEF0E6", "#E7F6F7"))\
+ryan_pal2 <- colorRampPalette(c("#E7F6F7", "#CEF0E6", "#AAE5D3", "#7FD1B9"))\
+ryan_pal3 <- colorRampPalette(c( "#84dcc6","#d6edff","#acd7ec","#8b95c9","#478978"))\
+log2_splom_data %>%\
+select(-c(1:3)) %>%\
+cor() %>%\
+corrplot(order = "hclust",\
+method = "square",\
+addrect = 8,\
+rect.col = "magenta4",\
+tl.cex =.75,\
+cl.ratio = 0.1,\
+cl.cex = 1,\
+#cl.offset = 0.8,\
+tl.col = "black",\
+tl.srt = 90,\
+bg = "white",\
+cl.lim = c(0,1),\
+is.corr = F,\
+col = ryan_pal3(6))\
+log2_splom_data <- log2(splom_data_zeros_removed[c(4:51)])\
+ryan_pal <- colorRampPalette(c("#7FD1B9", "#AAE5D3", "#CEF0E6", "#E7F6F7"))\
+ryan_pal2 <- colorRampPalette(c("#E7F6F7", "#CEF0E6", "#AAE5D3", "#7FD1B9"))\
+ryan_pal3 <- colorRampPalette(c( "#84dcc6","#d6edff","#acd7ec","#8b95c9","#478978"))\
+log2_splom_data %>%\
+select(-c(1:3)) %>%\
+cor() %>%\
+corrplot(order = "hclust",\
+method = "square",\
+addrect = 8,\
+rect.col = "magenta4",\
+tl.cex =.75,\
+cl.ratio = 0.1,\
+cl.cex = 1,\
+cl.off = 1\
+tl.col = "black",\
+tl.srt = 90,\
+bg = "white",\
+cl.lim = c(0,1),\
+is.corr = F,\
+col = ryan_pal3(6))\
+log2_splom_data <- log2(splom_data_zeros_removed[c(4:51)])\
+ryan_pal <- colorRampPalette(c("#7FD1B9", "#AAE5D3", "#CEF0E6", "#E7F6F7"))\
+ryan_pal2 <- colorRampPalette(c("#E7F6F7", "#CEF0E6", "#AAE5D3", "#7FD1B9"))\
+ryan_pal3 <- colorRampPalette(c( "#84dcc6","#d6edff","#acd7ec","#8b95c9","#478978"))\
+log2_splom_data %>%\
+select(-c(1:3)) %>%\
+cor() %>%\
+corrplot(order = "hclust",\
+method = "square",\
+addrect = 8,\
+rect.col = "magenta4",\
+tl.cex =.75,\
+cl.ratio = 0.1,\
+cl.cex = 1,\
+cl.off = 1,\
+tl.col = "black",\
+tl.srt = 90,\
+bg = "white",\
+cl.lim = c(0,1),\
+is.corr = F,\
+col = ryan_pal3(6))\
+log2_splom_data <- log2(splom_data_zeros_removed[c(4:51)])\
+ryan_pal <- colorRampPalette(c("#7FD1B9", "#AAE5D3", "#CEF0E6", "#E7F6F7"))\
+ryan_pal2 <- colorRampPalette(c("#E7F6F7", "#CEF0E6", "#AAE5D3", "#7FD1B9"))\
+ryan_pal3 <- colorRampPalette(c( "#84dcc6","#d6edff","#acd7ec","#8b95c9","#478978"))\
+log2_splom_data %>%\
+select(-c(1:3)) %>%\
+cor() %>%\
+corrplot(order = "hclust",\
+method = "square",\
+addrect = 8,\
+rect.col = "magenta4",\
+tl.cex =.75,\
+cl.ratio = 0.1,\
+cl.cex = 1,\
+cl.offset = 1,\
+tl.col = "black",\
+tl.srt = 90,\
+bg = "white",\
+cl.lim = c(0,1),\
+is.corr = F,\
+col = ryan_pal3(6))\
+#Creating a PCA plot for the FPKM values against the different sample IDs\
+splom_data %>%\
+select(-c(1:3)) %>%\
+scale() %>%\
+prcomp() -> pepper_pca\
+pepper_pca$rotation\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Row_N = row_number()) %>%\
+ggplot(aes(x = PC1, y = PC2, color = ifelse(Row_N == c(1:12), "red", "black"))) +\
+geom_point() +\
+theme_bw()\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Row_N = row_number()) %>%\
+ggplot(aes(x = PC2, y = PC3, color = ifelse(Row_N == c(1:12), "red", "black"))) +\
+geom_point() +\
+theme_bw()\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Row_N = row_number()) %>%\
+ggplot(aes(x = PC1, y = PC3, color = ifelse(Row_N == c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), "red", "black"))) +\
+geom_point() +\
+theme_bw()\
+PC1_PC2 + PC2_PC3 + PC1_PC3\
+var_explained = pepper_pca$sdev^2 / sum(pepper_pca$sdev^2)\
+qplot(c(1:48), var_explained) +\
+geom_line() +\
+xlab("Principal Component") +\
+ylab("Variance Explained") +\
+ggtitle("Scree Plot") +\
+ylim(0, 1)\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Row_N = row_number()) %>%\
+ggplot(aes(x = PC1, y = PC3, color = ifelse(Row_N == c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), "red", "black"))) +\
+geom_point() +\
+theme_bw()\
+View(pepper_pca)\
+View(pepper_pca)\
+log2_splom_data <- log2(splom_data_zeros_removed[c(4:51)])\
+ryan_pal <- colorRampPalette(c("#7FD1B9", "#AAE5D3", "#CEF0E6", "#E7F6F7"))\
+ryan_pal2 <- colorRampPalette(c("#E7F6F7", "#CEF0E6", "#AAE5D3", "#7FD1B9"))\
+ryan_pal3 <- colorRampPalette(c( "#84dcc6","#d6edff","#acd7ec","#8b95c9","#478978"))\
+log2_splom_data %>%\
+select(-c(1:3)) %>%\
+cor() %>%\
+corrplot(order = "hclust",\
+method = "square",\
+addrect = 8,\
+rect.col = "magenta4",\
+tl.cex =.75,\
+cl.ratio = 0.1,\
+cl.cex = 1,\
+tl.col = "black",\
+tl.srt = 90,\
+bg = "white",\
+cl.lim = c(0,1),\
+is.corr = F,\
+col = ryan_pal3(6))\
+View(log2_splom_data)\
+View(splom_data_zeros_removed)\
+log2_splom_data %>%\
+select(-c(1:3)) %>%\
+cor() %>% View()\
+log2_splom_data %>%\
+select(-c(1:3)) %>%\
+cor() %>% rownames()\
+pepper_pca\
+as_tibble(pepper_pca)\
+unnest(pepper_pca)\
+unnest(pepper_pca) %>%\
+summarize_at(.vars = vars(contains("PC")), .funs = funs(var)) %>%\
+gather(key = pc,\
+value = varience)\
+pepper_pca %>%\
+augment(splom_data)\
+library(broom)\
+pepper_pca %>%\
+augment(splom_data)\
+pepper_pca\
+pepper_pca$rotation\
+view(pepper_pca$rotation)\
+view(pepper_pca$rotation)\
+as_data_frame(pepper_pca$rotation)\
+as_tibble(pepper_pca$rotation)\
+rownames(pepper_pca$rotation)\
+?as_tibble\
+as_tibble(pepper_pca$rotation,\
+rownames = NA)\
+as_tibble(pepper_pca$rotation) %>%\
+rownames_to_column(pepper_pca)\
+rownames_to_column(pca_tibble, var = "Sample")\
+as_tibble(pepper_pca$rotation) -> pca_tibble\
+rownames_to_column(pca_tibble, var = "Sample")\
+pepper_pca$rotation\
+rownames(pepper_pca$rotation)\
+splom_names <- c("HabP1_R1", "HabP1_R2", "JalP1_R1", "JalP1_R2", "SerP1_R1", "SerP1_R2", "WaxP1_R1", "WaxP1_R2", "CheP1_R1", "CheP1_R2", "CheP2_R1", "CheP2_R2", "CheS1_R1", "CheS1_R2", "CheS2_R1", "CheS2_R2", "GhoP1_R1", "GhoP1_R2", "GhoS1_R1", "GhoS1_R2", "HabP2_R1", "HabP2_R2", "HabS1_R1", "HabS1_R2", "HabS2_R1", "HabS2_R2", "JalS1_R1", "JalS1_R2", "CayP2_R1", "CayP2_R2", "CayP3_R1", "CayP3_R2", "CayS1_R1", "CayS1_R2", "CayS3_R1", "CayS3_R2", "SerP2_R1", "SerP2_R2", "SerS1_R1", "SerS1_R2", "SerS2_R1", "SerS2_R2", "WaxP2_R1", "WaxP2_R2", "WaxS1_R1", "WaxS1_R2", "WaxS2_R1", "WaxS2_R2")\
+as_tibble(pepper_pca$rotation)\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names)\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>% View()\
+?str_detect\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin"))\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>% View()\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+ggplot(aes(x = PC1, y = PC2, color = Tissue)) +\
+geom_point() +\
+theme_bw()\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+ggplot(aes(x = PC1, y = PC2, color = Tissue)) +\
+geom_point() +\
+theme_bw() -> PC1_PC2\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+ggplot(aes(x = PC2, y = PC3, color = Tissue)) +\
+geom_point() +\
+theme_bw() -> PC2_PC3\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+ggplot(aes(x = PC1, y = PC3, color = Tissue)) +\
+geom_point() +\
+theme_bw() -> PC1_PC3\
+PC1_PC2 + PC2_PC3 + PC1_PC3\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+ggplot(aes(x = PC1, y = PC2, color = Tissue)) +\
+geom_point() + stat_ellipse()\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+ggplot(aes(x = PC1, y = PC2, color = Tissue)) +\
+geom_point() + stat_ellipse() +\
+theme_bw() -> PC1_PC2\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+ggplot(aes(x = PC1, y = PC2, color = Tissue)) +\
+geom_point() + stat_ellipse() +\
+theme_bw() -> PC1_PC2\
+PC1_PC2\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+ggplot(aes(x = PC1, y = PC2, color = Tissue)) +\
+geom_point() +\
+theme_bw() -> PC1_PC2\
+PC1_PC2 + PC2_PC3 + PC1_PC3\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+mutate(Direction = ifelse(str_detect(Sample, "R1"), "Forward", "Reverse")) %>%\
+ggplot(aes(x = PC1, y = PC2, color = Direction)) +\
+geom_point() +\
+theme_bw()\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+mutate(Direction = ifelse(str_detect(Sample, "R1"), "Forward", "Reverse")) %>%\
+ggplot(aes(x = PC1, y = PC2, fill = Direction)) +\
+geom_point() +\
+theme_bw()\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+mutate(Direction = ifelse(str_detect(Sample, "R1"), "Forward", "Reverse")) %>%\
+ggplot(aes(x = PC1, y = PC2, fill = Direction)) +\
+geom_point(pch = 1) +\
+theme_bw()\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+mutate(Direction = ifelse(str_detect(Sample, "R1"), "Forward", "Reverse")) %>%\
+ggplot(aes(x = PC1, y = PC2, fill = Tissue)) +\
+geom_point(pch = 1) +\
+theme_bw()\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+mutate(Direction = ifelse(str_detect(Sample, "R1"), "Forward", "Reverse")) %>%\
+ggplot(aes(x = PC1, y = PC2, fill = Tissue)) +\
+geom_point(pch = 1)\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+mutate(Direction = ifelse(str_detect(Sample, "R1"), "Forward", "Reverse")) %>%\
+ggplot(aes(x = PC1, y = PC2, color = Tissue)) +\
+geom_point(pch = 1)\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+mutate(Direction = ifelse(str_detect(Sample, "R1"), "Forward", "Reverse")) %>%\
+ggplot(aes(x = PC1, y = PC2, color = Tissue)) +\
+geom_point() +\
+theme_bw()\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+mutate(Direction = ifelse(str_detect(Sample, "R1"), "Forward", "Reverse")) %>%\
+ggplot(aes(x = PC1, y = PC2, color = Direction)) +\
+geom_point() +\
+theme_bw()\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+ggplot(aes(x = PC2, y = PC3, color = Tissue)) +\
+geom_point() +\
+theme_bw() -> PC2_PC3\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+ggplot(aes(x = PC1, y = PC3, color = Tissue)) +\
+geom_point() +\
+theme_bw()\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+ggplot(aes(x = PC2, y = PC3, color = Tissue)) +\
+geom_point() +\
+theme_bw()\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+ggplot(aes(x = PC2, y = PC24, color = Tissue)) +\
+geom_point() +\
+theme_bw()\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+ggplot(aes(x = PC2, y = PC15, color = Tissue)) +\
+geom_point() +\
+theme_bw()\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+ggplot(aes(x = PC2, y = PC48, color = Tissue)) +\
+geom_point() +\
+theme_bw()\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+ggplot(aes(x = PC2, y = PC3, color = Tissue)) +\
+geom_point() +\
+theme_bw()\
+as_tibble(pepper_pca$rotation) %>%\
+mutate(Sample = splom_names) %>%\
+mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%\
+ggplot(aes(x = PC1, y = PC3, color = Tissue)) +\
+geom_point() +\
+theme_bw()\
+var_explained = pepper_pca$sdev^2 / sum(pepper_pca$sdev^2)\
+qplot(c(1:48), var_explained) +\
+geom_line() +\
+xlab("Principal Component") +\
+ylab("Variance Explained") +\
+ggtitle("Scree Plot") +\
+ylim(0, 1)\
+}
