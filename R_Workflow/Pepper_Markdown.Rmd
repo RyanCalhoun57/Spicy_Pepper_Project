@@ -22,7 +22,7 @@ library(patchwork)
 library(corrplot)
 
 
-#setwd("/Users/Caronelab/Desktop/Spicy_Pepper_Project/R_Workflow")
+setwd("/Users/Caronelab/Desktop/Spicy_Pepper_Project/R_Workflow")
 #setwd("/Users/nickpaterna/Repositories/Spicy_Pepper_Project/R_Workflow")
 
 ```
@@ -118,13 +118,46 @@ splom_names <- c("HabP1_R1", "HabP1_R2", "JalP1_R1", "JalP1_R2", "SerP1_R1", "Se
 
 splom_data %>%
   select(-c(1:3)) %>%
+  colnames() -> pepper_columns
+
+naming_function <- if(str_detect(pepper_columns, "Hab")){
+  print("Habanero")
+} else if (str_detect(pepper_columns, "Jal")){
+  print("Jalapeno")
+} else if (str_detect(pepper_columns, "Ser")){
+  print("Serrano")
+} else if (str_detect(pepper_columns, "Wax")){
+  print("Hungarian Wax")
+} else if (str_detect(pepper_columns, "Che")){
+  print("Cherry")
+} else if (str_detect(pepper_columns, "Gho")){
+  print("Ghost")
+} else print("Cayenne")
+
+
+
+splom_data %>%
+  select(-Protein_Function) %>%
+  rename(Gene_ID = genes_fpkm_with_protein_charact,
+         Locus = locus) %>%
+  select(Pepper_Name = )
+  print()
+
+
+
+splom_data %>%
+  select(-c(1:3)) %>%
   scale() %>% #Normalizes data for clustering
   prcomp() -> pepper_pca
 
-as_tibble(pepper_pca$rotation) %>% #Generates table
-  mutate(Sample = splom_names) %>% #Adds correct sample names per rotation
-  mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%
-  mutate(Direction = ifelse(str_detect(Sample, "R1"), "Forward", "Reverse")) %>%
+as_tibble(pepper_pca$x) %>% #Generates table
+  mutate(Gene_ID = splom_data$genes_fpkm_with_protein_charact,
+         Locus = splom_data$locus) %>% print()
+  
+  
+  
+  
+  
   ggplot(aes(x = PC1, y = PC2, color = Tissue)) +
   geom_point() + theme_bw()
 
