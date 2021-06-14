@@ -23,7 +23,7 @@ library(corrplot)
 
 
 #setwd("/Users/Caronelab/Desktop/Spicy_Pepper_Project/R_Workflow")
-setwd("/Users/nickpaterna/Repositories/Spicy_Pepper_Project/R_Workflow")
+#setwd("/Users/nickpaterna/Repositories/Spicy_Pepper_Project/R_Workflow")
 
 ```
 
@@ -163,37 +163,45 @@ Creating a scatter plot that plots the FPKM values for a forward run sample agai
 
 log2_splom <- log2(splom_mod[c(4:51)]) #Using the mod splom data to log2
 
-  Che_scatter <- splom(log2_splom[c(9,10,11,12,13,14,15,16)],
-                       par.settings = simpleTheme(col="darkseagreen4"),
-                       pch = 20)
+ #  #Che_scatter <- splom(log2_splom[c(9,10,11,12,13,14,15,16)],
+ #                       par.settings = #simpleTheme(col="darkseagreen4"),
+ #                       pch = 20)
+ # 
+ # # Hab_scatter <- splom(log2_splom[c(1,2,21,22,23,24,25,26)],
+ #                       par.settings = #simpleTheme(col="goldenrod1"),
+ #                       pch = 20)
+  
+Jal_scatter <- splom(log2_splom[c(3,4,27,28)],
+        par.settings =simpleTheme(col="cyan"),
+        upper.panel = NULL, #Removes upper scatterplot
+        varname.cex = 0.95, #changes pepper name size
+        axis.text.cex = 0.65, #changes axis size
+        xlab= "Jalapeno FPKM values", #x-axis label
+        ylab= "Jalapeno FPKM values", #y-axis label
+        pscales = 5, #number of equally spaced ticks on plot
+        axis.line.lty = 3,
+        px.scatter = TRUE,
+        horizontal=TRUE,
+        pch = 20) #changes dot type
 
-  Hab_scatter <- splom(log2_splom[c(1,2,21,22,23,24,25,26)],
-                       par.settings = simpleTheme(col="goldenrod1"),
-                       pch = 20)
+Jal_scatter
   
-  
-  Jal_scatter <- splom(log2_splom[c(3,4,27,28)],
-                       par.settings = simpleTheme(col="cyan4"),
-                       pch = 20)
-  
-  Ser_scatter <- splom(log2_splom[c(5,6,37,38,39,40,41,42)],
-                       par.settings = simpleTheme(col="magenta4"),
-                       pch = 20)
-  
-  Gho_scatter <- splom(log2_splom[c(17,18,19,20)],
-                       par.settings = simpleTheme(col="sienna"),
-                       pch = 20)
-  
-  Wax_scatter <- splom(log2_splom[c(7,8,43,44,45,46,47,48)],
-                       par.settings = simpleTheme(col="deeppink4"),
-                       pch = 20)
-  
-  Cay_scatter <- splom(log2_splom[c(29,30,31,32,33,34,35,36)],
-                       par.settings = simpleTheme(col="burlywood4"),
-                       pch = 20)
-  
-  Che_scatter
-
+ #  #Ser_scatter <- splom(log2_splom[c(5,6,37,38,39,40,41,42)],
+ #                       par.settings = simpleTheme(col="magenta4"),
+ #                       pch = 20)
+ #  
+ # # Gho_scatter <- splom(log2_splom[c(17,18,19,20)],
+ #                       par.settings = simpleTheme(col="sienna"),
+ #                       pch = 20)
+ #  
+ #  Wax_scatter <- splom(log2_splom[c(7,8,43,44,45,46,47,48)],
+ #                       par.settings = simpleTheme(col="deeppink4"),
+ #                       pch = 20)
+ #  
+ #  Cay_scatter <- splom(log2_splom[c(29,30,31,32,33,34,35,36)],
+ #                       par.settings = simpleTheme(col="burlywood4"),
+ #                       pch = 20)
+ #  
 ```
 
 ##Creating HeatMap for Pepper samples
