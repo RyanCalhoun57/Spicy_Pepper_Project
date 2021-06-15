@@ -215,13 +215,11 @@ splom_object <- genes_fpkm %>%
   pivot_wider(names_from = Sample_ID,
               values_from = FPKM_log2)
 
-  str_replace(splom_object,"Hab", "Habanero")
-
-Che_scatter <- splom(log2_splom[c(9,10,11,12,13,14,15,16)],
+Che_scatter <- splom(splom_object[c(9,10,11,12,13,14,15,16)],
                        par.settings = simpleTheme(col="darkseagreen4"),
                        pch = 20)
 
-Hab_scatter <- splom(log2_splom[c(1,2,21,22,23,24,25,26)],
+Hab_scatter <- splom(splom_object[c(1,2,21,22,23,24,25,26)],
                        par.settings = simpleTheme(col="goldenrod1"),
                        pch = 20)
   
@@ -239,7 +237,7 @@ Hab_scatter <- splom(log2_splom[c(1,2,21,22,23,24,25,26)],
         pch = 20)
   
 
-splom(log2_splom[c(3,4,27,28)],
+splom(splom_object[c(3,4,27,28)],
         par.settings =simpleTheme(col="cyan"),
         upper.panel = NULL, #Removes upper scatterplot
         varname.cex = 0.95, #changes pepper name size
@@ -253,19 +251,19 @@ splom(log2_splom[c(3,4,27,28)],
         pch = 20) #changes dot type
 
   
-splom(log2_splom[c(5,6,37,38,39,40,41,42)],
+splom(splom_object[c(5,6,37,38,39,40,41,42)],
       par.settings = simpleTheme(col="magenta4"),
       pch = 20)
 
- # # Gho_scatter <- splom(log2_splom[c(17,18,19,20)],
+ # # Gho_scatter <- splom(splom_object[c(17,18,19,20)],
  #                       par.settings = simpleTheme(col="sienna"),
  #                       pch = 20)
  #  
- #  Wax_scatter <- splom(log2_splom[c(7,8,43,44,45,46,47,48)],
+ #  Wax_scatter <- splom(splom_object[c(7,8,43,44,45,46,47,48)],
  #                       par.settings = simpleTheme(col="deeppink4"),
  #                       pch = 20)
  #  
- #  Cay_scatter <- splom(log2_splom[c(29,30,31,32,33,34,35,36)],
+ #  Cay_scatter <- splom(splom_object[c(29,30,31,32,33,34,35,36)],
  #                       par.settings = simpleTheme(col="burlywood4"),
  #                       pch = 20)
  #  
