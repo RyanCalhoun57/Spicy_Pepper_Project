@@ -1,6 +1,6 @@
 ---
 title: "Thesis Data Viz"
-author: "Ryan Calhoun"
+author: "Ryan Calhoun & Nicholas Paterna"
 date: "6/3/2021"
 output: 
   html_document:
@@ -22,8 +22,8 @@ library(patchwork)
 library(corrplot)
 
 
-#setwd("/Users/Caronelab/Desktop/Spicy_Pepper_Project/R_Workflow")
-setwd("/Users/nickpaterna/Repositories/Spicy_Pepper_Project/R_Workflow")
+setwd("/Users/Caronelab/Desktop/Spicy_Pepper_Project/R_Workflow")
+#setwd("/Users/nickpaterna/Repositories/Spicy_Pepper_Project/R_Workflow")
 
 ```
 
@@ -34,7 +34,6 @@ setwd("/Users/nickpaterna/Repositories/Spicy_Pepper_Project/R_Workflow")
 
 genes_fpkm <- read_csv ("genes_fpkm.csv") #Reading in FPKM Values
 protein_data <- read_csv("Spicy_Pepper_cufflinks_information.csv") #Pepper info
-splom_data <- read_csv("splom.csv") #Formatted for splom
 
 ```
 
@@ -111,17 +110,15 @@ trimmed_tidy %>%
 
 ##Creating PCAs for Pepper Samples
 
-```{r PCA of Pepper Samples}
+```{r Attempting to Create a Naming Function, echo = FALSE}
 
-splom_names <- c("HabP1_R1", "HabP1_R2", "JalP1_R1", "JalP1_R2", "SerP1_R1", "SerP1_R2", "WaxP1_R1", "WaxP1_R2", "CheP1_R1", "CheP1_R2", "CheP2_R1", "CheP2_R2", "CheS1_R1", "CheS1_R2", "CheS2_R1", "CheS2_R2", "GhoP1_R1", "GhoP1_R2", "GhoS1_R1", "GhoS1_R2", "HabP2_R1", "HabP2_R2", "HabS1_R1", "HabS1_R2", "HabS2_R1", "HabS2_R2", "JalS1_R1", "JalS1_R2", "CayP2_R1", "CayP2_R2", "CayP3_R1", "CayP3_R2", "CayS1_R1", "CayS1_R2", "CayS3_R1", "CayS3_R2", "SerP2_R1", "SerP2_R2", "SerS1_R1", "SerS1_R2", "SerS2_R1", "SerS2_R2", "WaxP2_R1", "WaxP2_R2", "WaxS1_R1", "WaxS1_R2", "WaxS2_R1", "WaxS2_R2") #Object contains sample names in order
-
-splom_data %>%
-  select(-c(1:3)) %>%
+splom_object %>%
+  select(-Gene_ID) %>%
   colnames() -> pepper_columns
 
 naming_function <- function()
 {
-  
+
   if(str_detect(pepper_columns, "Hab")){
   print("Habanero")
 } else if (str_detect(pepper_columns, "Jal")){
@@ -137,63 +134,57 @@ naming_function <- function()
 } else {print("Cayenne")}
 }
 
+```
 
 
 
-splom_data %>%
-  select(-Protein_Function) %>%
-  rename(Gene_ID = genes_fpkm_with_protein_charact,
-         Locus = locus) %>%
-  select(Pepper_Name = )
-  print()
+```{r PCA of Pepper Samples}
 
-
-trimmed_tidy %>%
+#### Using dplyr to manipulate the data we have into a format we want ####
+pre_pca <- genes_fpkm %>%
+  pivot_longer(cols = 4:51,
+               names_to = "Sample_ID",
+               values_to = "FPKM") %>%
   mutate(FPKM = ifelse(FPKM == 0, 1, FPKM), 
-         FPKM_log2 = log2(FPKM))%>%
-  select(Gene_ID, Sample_ID, Direction, FPKM_log2) %>%
-  unite(combined, Sample_ID, Direction) %>%
-  pivot_wider(names_from = combined, values_from = FPKM_log2) -> pre_pca
+         FPKM_log2 = log2(FPKM)) %>%
+  mutate(Sample_ID = str_sub(Sample_ID, 1, -5)) %>%
+  rename(Gene_ID = genes_fpkm_with_protein_charact) %>%
+  select(c(-Protein_Function, -locus, -FPKM)) %>%
+  pivot_wider(names_from = Gene_ID,
+              values_from = FPKM_log2)
 
+#### Running the PCA ####
 pre_pca %>%
-  select(-Gene_ID) %>%
+  select(-Sample_ID) %>%
   scale() %>% #Normalizes data for clustering
   prcomp() -> pepper_pca
 
+#### Plotting PC1 v PC2 ####
 as_tibble(pepper_pca$x) %>% #Generates table
-  mutate(Gene_ID = pre_pca$Gene_ID) %>% select(Gene_ID)
-
-
-%>%
-  left_join(
-    trimmed_tidy %>% select(Gene_ID, Pepper_Name)
-  ) %>% select(PC1, Gene_ID, Pepper_Name) %>%head()
-
-
-
-%>%
+  mutate(Sample_ID = pre_pca$Sample_ID) %>%
   ggplot(aes(x = PC1, y = PC2, color = Pepper_Name)) +
-  geom_point(size = 0.5, alpha=0.5) + theme_bw() + 
+  geom_point(size = 0.5,
+             alpha=0.5) +
+  theme_bw() + 
   facet_wrap(~Pepper_Name)
 
-
-
-
-as_tibble(pepper_pca$rotation) %>% #Generates table
-  mutate(Sample = splom_names) %>% #Adds correct sample names per rotation
-  mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%
-  mutate(Direction = ifelse(str_detect(Sample, "R1"), "Forward", "Reverse")) %>%
+#### Plotting PC1 v PC3 ####
+as_tibble(pepper_pca$x) %>% #Generates table
+  mutate(Tissue = ifelse(str_detect(Sample_ID, "P"), "Placenta", "Skin")) %>%
+  mutate(Direction = ifelse(str_detect(Sample_ID, "R1"), "Forward", "Reverse")) %>%
   ggplot(aes(x = PC1, y = PC3, color = Tissue)) +
   geom_point() + theme_bw()
 
+#### Plotting PC2 v PC3 ####
 as_tibble(pepper_pca$rotation) %>% #Generates table
-  mutate(Sample = splom_names) %>% #Adds correct sample names per rotation
-  mutate(Tissue = ifelse(str_detect(Sample, "P"), "Placenta", "Skin")) %>%
-  mutate(Direction = ifelse(str_detect(Sample, "R1"), "Forward", "Reverse")) %>%
+  mutate(Tissue = ifelse(str_detect(Sample_ID, "P"), "Placenta", "Skin")) %>%
+  mutate(Direction = ifelse(str_detect(Sample_ID, "R1"), "Forward", "Reverse")) %>%
   ggplot(aes(x = PC2, y = PC3, color = Direction)) +
   geom_point() + theme_bw()
 
-  var_explained = pepper_pca$sdev^2 / sum(pepper_pca$sdev^2)
+  
+#### Creating a Scree Plot to show PC variation ####
+  var_explained = pepper_pca$sdev^2 / sum(pepper_pca$sdev^2) #Defining the amount of variation explained by each PC
 
 
   qplot(c(1:48), var_explained) + #Using qplot to quickly select info out of a value
@@ -212,17 +203,43 @@ Creating a scatter plot that plots the FPKM values for a forward run sample agai
 
 ```{r Scatterplot of FPKM values}
 
-log2_splom <- log2(splom_mod[c(4:51)]) #Using the mod splom data to log2
+splom_object <- genes_fpkm %>%
+  pivot_longer(cols = 4:51,
+               names_to = "Sample_ID",
+               values_to = "FPKM") %>%
+  mutate(FPKM = ifelse(FPKM == 0, 1, FPKM), 
+         FPKM_log2 = log2(FPKM)) %>%
+  mutate(Sample_ID = str_sub(Sample_ID, 1, -5)) %>%
+  rename(Gene_ID = genes_fpkm_with_protein_charact) %>%
+  select(c(-Protein_Function, -locus, -FPKM)) %>%
+  pivot_wider(names_from = Sample_ID,
+              values_from = FPKM_log2)
 
- #  #Che_scatter <- splom(log2_splom[c(9,10,11,12,13,14,15,16)],
- #                       par.settings = #simpleTheme(col="darkseagreen4"),
- #                       pch = 20)
- # 
- # # Hab_scatter <- splom(log2_splom[c(1,2,21,22,23,24,25,26)],
- #                       par.settings = #simpleTheme(col="goldenrod1"),
- #                       pch = 20)
+  str_replace(splom_object,"Hab", "Habanero")
+
+Che_scatter <- splom(log2_splom[c(9,10,11,12,13,14,15,16)],
+                       par.settings = simpleTheme(col="darkseagreen4"),
+                       pch = 20)
+
+Hab_scatter <- splom(log2_splom[c(1,2,21,22,23,24,25,26)],
+                       par.settings = simpleTheme(col="goldenrod1"),
+                       pch = 20)
   
-Jal_scatter <- splom(log2_splom[c(3,4,27,28)],
+  
+  splom(par.settings =simpleTheme(col="cyan"),
+        upper.panel = NULL, #Removes upper scatterplot
+        varname.cex = 0.95, #changes pepper name size
+        axis.text.cex = 0.65, #changes axis size
+        xlab= "Jalapeno FPKM values", #x-axis label
+        ylab= "Jalapeno FPKM values", #y-axis label
+        pscales = 5, #number of equally spaced ticks on plot
+        axis.line.lty = 3,
+        px.scatter = TRUE,
+        horizontal=TRUE,
+        pch = 20)
+  
+
+splom(log2_splom[c(3,4,27,28)],
         par.settings =simpleTheme(col="cyan"),
         upper.panel = NULL, #Removes upper scatterplot
         varname.cex = 0.95, #changes pepper name size
@@ -235,12 +252,11 @@ Jal_scatter <- splom(log2_splom[c(3,4,27,28)],
         horizontal=TRUE,
         pch = 20) #changes dot type
 
-Jal_scatter
   
- #  #Ser_scatter <- splom(log2_splom[c(5,6,37,38,39,40,41,42)],
- #                       par.settings = simpleTheme(col="magenta4"),
- #                       pch = 20)
- #  
+splom(log2_splom[c(5,6,37,38,39,40,41,42)],
+      par.settings = simpleTheme(col="magenta4"),
+      pch = 20)
+
  # # Gho_scatter <- splom(log2_splom[c(17,18,19,20)],
  #                       par.settings = simpleTheme(col="sienna"),
  #                       pch = 20)
@@ -270,14 +286,12 @@ Creating a heatmap to show the top highly expressed genes utilizing their FPKM v
 
 ```{r Corrplot}
 
-log2_splom_data <- log2(splom_mod[c(4:51)]) #Performs log2 Transform
-
 #Creating Ryan's color palettes for the scale
 ryan_pal <- colorRampPalette(c("#7FD1B9", "#AAE5D3", "#CEF0E6", "#E7F6F7"))
 ryan_pal2 <- colorRampPalette(c("#E7F6F7", "#CEF0E6", "#AAE5D3", "#7FD1B9"))
 ryan_pal3 <- colorRampPalette(c( "#84dcc6","#d6edff","#acd7ec","#8b95c9","#478978"))
 
-log2_splom_data %>%
+splom_object %>%
   select(-c(1:3)) %>%
   cor() %>%
   corrplot(order = "hclust", #Specifies how we arrange data
