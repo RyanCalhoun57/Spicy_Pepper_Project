@@ -22,8 +22,8 @@ library(patchwork)
 library(corrplot)
 
 
-setwd("/Users/Caronelab/Desktop/Spicy_Pepper_Project/R_Workflow")
-#setwd("/Users/nickpaterna/Repositories/Spicy_Pepper_Project/R_Workflow")
+#setwd("/Users/Caronelab/Desktop/Spicy_Pepper_Project/R_Workflow")
+setwd("/Users/nickpaterna/Repositories/Spicy_Pepper_Project/R_Workflow")
 
 ```
 
@@ -32,10 +32,9 @@ setwd("/Users/Caronelab/Desktop/Spicy_Pepper_Project/R_Workflow")
   
 ```{r Loading in Data}
 
-genes_fpkm <- read.csv ("genes_fpkm.csv") #Reading in FPKM Values
-protein_data <- read.csv("Spicy_Pepper_cufflinks_information.csv") #Pepper info
-splom_data <- read.csv("splom.csv") #Formatted for splom
-splom_mod <- read.csv("splom_mod.csv") #Adjusted -Inf to 1
+genes_fpkm <- read_csv ("genes_fpkm.csv") #Reading in FPKM Values
+protein_data <- read_csv("Spicy_Pepper_cufflinks_information.csv") #Pepper info
+splom_data <- read_csv("splom.csv") #Formatted for splom
 
 ```
 
@@ -120,7 +119,10 @@ splom_data %>%
   select(-c(1:3)) %>%
   colnames() -> pepper_columns
 
-naming_function <- if(str_detect(pepper_columns, "Hab")){
+naming_function <- function()
+{
+  
+  if(str_detect(pepper_columns, "Hab")){
   print("Habanero")
 } else if (str_detect(pepper_columns, "Jal")){
   print("Jalapeno")
@@ -132,7 +134,9 @@ naming_function <- if(str_detect(pepper_columns, "Hab")){
   print("Cherry")
 } else if (str_detect(pepper_columns, "Gho")){
   print("Ghost")
-} else print("Cayenne")
+} else {print("Cayenne")}
+}
+
 
 
 
@@ -144,22 +148,36 @@ splom_data %>%
   print()
 
 
+trimmed_tidy %>%
+  mutate(FPKM = ifelse(FPKM == 0, 1, FPKM), 
+         FPKM_log2 = log2(FPKM))%>%
+  select(Gene_ID, Sample_ID, Direction, FPKM_log2) %>%
+  unite(combined, Sample_ID, Direction) %>%
+  pivot_wider(names_from = combined, values_from = FPKM_log2) -> pre_pca
 
-splom_data %>%
-  select(-c(1:3)) %>%
+pre_pca %>%
+  select(-Gene_ID) %>%
   scale() %>% #Normalizes data for clustering
   prcomp() -> pepper_pca
 
 as_tibble(pepper_pca$x) %>% #Generates table
-  mutate(Gene_ID = splom_data$genes_fpkm_with_protein_charact,
-         Locus = splom_data$locus) %>% print()
-  
-  
-  
-  
-  
-  ggplot(aes(x = PC1, y = PC2, color = Tissue)) +
-  geom_point() + theme_bw()
+  mutate(Gene_ID = pre_pca$Gene_ID) %>% select(Gene_ID)
+
+
+%>%
+  left_join(
+    trimmed_tidy %>% select(Gene_ID, Pepper_Name)
+  ) %>% select(PC1, Gene_ID, Pepper_Name) %>%head()
+
+
+
+%>%
+  ggplot(aes(x = PC1, y = PC2, color = Pepper_Name)) +
+  geom_point(size = 0.5, alpha=0.5) + theme_bw() + 
+  facet_wrap(~Pepper_Name)
+
+
+
 
 as_tibble(pepper_pca$rotation) %>% #Generates table
   mutate(Sample = splom_names) %>% #Adds correct sample names per rotation
