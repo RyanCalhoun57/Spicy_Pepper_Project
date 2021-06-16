@@ -20,7 +20,7 @@ library(RColorBrewer)
 library(lattice)
 library(patchwork)
 library(corrplot)
-
+library(MQMF)
 
 setwd("/Users/Caronelab/Desktop/Spicy_Pepper_Project/R_Workflow")
 #setwd("/Users/nickpaterna/Repositories/Spicy_Pepper_Project/R_Workflow")
@@ -32,7 +32,7 @@ setwd("/Users/Caronelab/Desktop/Spicy_Pepper_Project/R_Workflow")
   
 ```{r Loading in Data}
 
-genes_fpkm <- read_csv ("genes_fpkm.csv") #Reading in FPKM Values
+genes_fpkm <- read_csv("genes_fpkm.csv") #Reading in FPKM Values
 protein_data <- read_csv("Spicy_Pepper_cufflinks_information.csv") #Pepper info
 
 ```
@@ -213,7 +213,57 @@ splom_object <- genes_fpkm %>%
   rename(Gene_ID = genes_fpkm_with_protein_charact) %>%
   select(c(-Protein_Function, -locus, -FPKM)) %>%
   pivot_wider(names_from = Sample_ID,
-              values_from = FPKM_log2)
+              values_from = FPKM_log2) %>%
+  rename(HabP1_R1 = HabP1_R1,
+HabP1_R2 = HabP1_R2,
+JalP1_R1 = JalP1_R1, 
+JalP1_R2 = JalP1_R2,
+SerP1_R1 = SerP1_R1,
+SerP1_R2 = SerP1_R2,
+WaxP1_R1 = WaxP1_R1,
+WaxP1_R2 = WaxP1_R2,
+CheP1_R1 = CheP1.LCL3435_L3_R1,
+CheP1_R2 = CheP1.LCL3435_L3_R2,
+CheP2_R1 = CheP2.LCL3437_L3_R1,
+CheP2_R2 = CheP2.LCL3437_L3_R2,
+CheS1_R1 = CheS1.LCL3434_L3_R1,
+CheS1_R2 = CheS1.LCL3434_L3_R2,
+CheS2_R1 = CheS2.LCL3436_L3_R1,
+CheS2_R2 = CheS2.LCL3436_L3_R2,
+GhoP1_R1 = GhoP1.LCL3453_L3_R1,
+GhoP1_R2 = GhoP1.LCL3453_L3_R2,
+GhoS1_R1 = GhoS1.LCL3452_L3_R1,
+GhoS2_R2 = GhoS1.LCL3452_L3_R2,
+HabP2_R1 = HabP2.LCL3451_L3_R1,
+HabP2_R2 = HabP2.LCL3451_L3_R2,
+HabS1_R1 = HabS1.LCL3448_L3_R1,
+HabS1_R2 = HabS1.LCL3448_L3_R2,
+HabS2_R1 = HabS2.LCL3450_L3_R1,
+HabS2_R2 = HabS2.LCL3450_L3_R2,
+JalS1_R1 = JalS1.LCL3442_L3_R1,
+JalS1_R2 = JalS1.LCL3442_L3_R2,
+CayP2_R1 = CayP2.LCL3431_L3_R1,
+CayP2_R2 = CayP2.LCL3431_L3_R2,
+CayP3_R1 = CayP3.LCL3433_L3_R1,
+CayP3_R2 = CayP3.LCL3433_L3_R2,
+CayS1_R1 = CayS1.LCL3430_L3_R1,
+CayS1_R2 = CayS1.LCL3430_L3_R2,
+CayS3_R1 = CayS3.LCL3432_L3_R1,
+CayS3_R2 = CayS3.LCL3432_L3_R2,
+SerP2_R1 = SerP2.LCL3447_L3_R1,
+SerP2_R2 = SerP2.LCL3447_L3_R2,
+SerS1_R1 = SerS1.LCL3444_L3_R1,
+SerS1_R2 = SerS1.LCL3444_L3_R2,
+SerS2_R1 = SerS2.LCL3446_L3_R1,
+SerS2_R2 = SerS2.LCL3446_L3_R2,
+WaxP2_R1 = WaxP2.LCL3441_L3_R1,
+WaxP2_R2 = WaxP2.LCL3441_L3_R2,
+WaxS1_R1 = WaxS1.LCL3438_L3_R1,
+WaxS1_R2 = WaxS1.LCL3438_L3_R2,
+WaxS2_R1 = WaxS2.LCL3440_L3_R1,
+WaxS2_R2 = WaxS2.LCL3440_L3_R2)
+
+
 
 Che_scatter <- splom(splom_object[c(9,10,11,12,13,14,15,16)],
                        par.settings = simpleTheme(col="darkseagreen4"),
@@ -224,36 +274,37 @@ Hab_scatter <- splom(splom_object[c(1,2,21,22,23,24,25,26)],
                        pch = 20)
   
   
-  splom(par.settings =simpleTheme(col="cyan"),
-        upper.panel = NULL, #Removes upper scatterplot
-        varname.cex = 0.95, #changes pepper name size
-        axis.text.cex = 0.65, #changes axis size
-        xlab= "Jalapeno FPKM values", #x-axis label
-        ylab= "Jalapeno FPKM values", #y-axis label
-        pscales = 5, #number of equally spaced ticks on plot
-        axis.line.lty = 3,
-        px.scatter = TRUE,
-        horizontal=TRUE,
-        pch = 20)
-  
-
-splom(splom_object[c(3,4,27,28)],
-        par.settings =simpleTheme(col="cyan"),
-        upper.panel = NULL, #Removes upper scatterplot
-        varname.cex = 0.95, #changes pepper name size
-        axis.text.cex = 0.65, #changes axis size
-        xlab= "Jalapeno FPKM values", #x-axis label
-        ylab= "Jalapeno FPKM values", #y-axis label
-        pscales = 5, #number of equally spaced ticks on plot
-        axis.line.lty = 3,
-        px.scatter = TRUE,
-        horizontal=TRUE,
-        pch = 20) #changes dot type
+  # splom(splom_object[c(4,5,28,29)],
+  #       par.settings =simpleTheme(col="magenta4"),
+  #       upper.panel = panel.cor, #Removes upper scatterplot
+  #       varname.cex = 0.95, #changes pepper name size
+  #       axis.text.cex = 0.65, #changes axis size
+  #       xlab= "Jalapeno FPKM values", #x-axis label
+  #       ylab= "Jalapeno FPKM values", #y-axis label
+  #       pscales = 5, #number of equally spaced ticks on plot
+  #       axis.line.lty = 3,
+  #       px.scatter = TRUE,
+  #       horizontal=TRUE,
+  #       pch = ".")
 
   
-splom(splom_object[c(5,6,37,38,39,40,41,42)],
-      par.settings = simpleTheme(col="magenta4"),
-      pch = 20)
+splom_object %>%
+  select(starts_with("Jal")) %>% #Identifies pepper sample by name
+  pairs(upper.panel = panel.cor, #Replaces upper panel scatterplots with r-squared values
+        font.labels = 2, #changes sample label size
+        main = "Jalapeno FPKM values", #graph title
+        pch = ".", #graph point size
+        col = "magenta4") #changes point color
+
+splom_object %>%
+  select(starts_with("Ser")) %>% #Identifies pepper sample by name
+  pairs(upper.panel = panel.cor, #Replaces upper panel scatterplots with r-squared values
+        font.labels = 2, #changes sample label size
+        main = "Serrano FPKM values", #graph title
+        pch = ".", #graph point size
+        col = "magenta4") #changes point color
+
+
 
  # # Gho_scatter <- splom(splom_object[c(17,18,19,20)],
  #                       par.settings = simpleTheme(col="sienna"),
