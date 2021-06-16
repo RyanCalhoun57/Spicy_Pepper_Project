@@ -22,8 +22,9 @@ library(patchwork)
 library(corrplot)
 library(MQMF)
 
-setwd("/Users/Caronelab/Desktop/Spicy_Pepper_Project/R_Workflow")
-#setwd("/Users/nickpaterna/Repositories/Spicy_Pepper_Project/R_Workflow")
+setwd("/Users/Caronelab/Desktop/Spicy_Pepper_Project/R_Workflow") #Lab Computer
+#setwd("/Users/nickpaterna/Repositories/Spicy_Pepper_Project/R_Workflow") #Nick's MacBook
+#setwd("/Users/calhoun/Repositories/Spicy_Pepper_Project") #Ryan's MacBook
 
 ```
 
