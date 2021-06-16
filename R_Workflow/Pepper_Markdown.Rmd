@@ -386,11 +386,56 @@ splom_object %>%
 ```
 
 
-###Corrplot for Pepper Samples
-```{r Corrplot}
+###MDSfor Pepper Samples
+```{r MDS}
+
+#Log2 Principal components analysis (PCA)
+genes_fpkm %>%
+  rename(HabP1_R1_ = HabP1_R1_001,HabP1_R2_001 = HabP1_R2_001,JalP1_R1_001 = JalP1_R1_001, JalP1_R2_001 = JalP1_R2_001,SerP1_R1_001 = SerP1_R1_001,SerP1_R2_001 = SerP1_R2_001,WaxP1_R1_001 = WaxP1_R1_001,WaxP1_R2_001 = WaxP1_R2_001,CheP1_R1_001 = CheP1.LCL3435_L3_R1_001,CheP1_R2_001 = CheP1.LCL3435_L3_R2_001,CheP2_R1_001 = CheP2.LCL3437_L3_R1_001,CheP2_R2_001 = CheP2.LCL3437_L3_R2_001,CheS1_R1_001 = CheS1.LCL3434_L3_R1_001,CheS1_R2_001 = CheS1.LCL3434_L3_R2_001,CheS2_R1_001 = CheS2.LCL3436_L3_R1_001,CheS2_R2_001 = CheS2.LCL3436_L3_R2_001,GhoP1_R1_001 = GhoP1.LCL3453_L3_R1_001,GhoP1_R2_001 = GhoP1.LCL3453_L3_R2_001,GhoS1_R1_001 = GhoS1.LCL3452_L3_R1_001,GhoS2_R2_001 = GhoS1.LCL3452_L3_R2_001,HabP2_R1_001 = HabP2.LCL3451_L3_R1_001,HabP2_R2_001 = HabP2.LCL3451_L3_R2_001,HabS1_R1_001 = HabS1.LCL3448_L3_R1_001,HabS1_R2_001 = HabS1.LCL3448_L3_R2_001,HabS2_R1_001 = HabS2.LCL3450_L3_R1_001,HabS2_R2_001 = HabS2.LCL3450_L3_R2_001,JalS1_R1_001 = JalS1.LCL3442_L3_R1_001,JalS1_R2_001 = JalS1.LCL3442_L3_R2_001,CayP2_R1_001 = CayP2.LCL3431_L3_R1_001,CayP2_R2_001 = CayP2.LCL3431_L3_R2_001,CayP3_R1_001 = CayP3.LCL3433_L3_R1_001,CayP3_R2_001 = CayP3.LCL3433_L3_R2_001,CayS1_R1_001 = CayS1.LCL3430_L3_R1_001,CayS1_R2_001 = CayS1.LCL3430_L3_R2_001,CayS3_R1_001 = CayS3.LCL3432_L3_R1_001,CayS3_R2_001 = CayS3.LCL3432_L3_R2_001,SerP2_R1_001 = SerP2.LCL3447_L3_R1_001,SerP2_R2_001 = SerP2.LCL3447_L3_R2_001,SerS1_R1_001 = SerS1.LCL3444_L3_R1_001,SerS1_R2_001 = SerS1.LCL3444_L3_R2_001,SerS2_R1_001 = SerS2.LCL3446_L3_R1_001,SerS2_R2_001 = SerS2.LCL3446_L3_R2_001,WaxP2_R1_001 = WaxP2.LCL3441_L3_R1_001,WaxP2_R2_001 = WaxP2.LCL3441_L3_R2_001,WaxS1_R1_001 = WaxS1.LCL3438_L3_R1_001,WaxS1_R2_001 = WaxS1.LCL3438_L3_R2_001,WaxS2_R1_001 = WaxS2.LCL3440_L3_R1_001,WaxS2_R2_001 = WaxS2.LCL3440_L3_R2_001) %>% #Renaming the peppernames to their shortened abbreviations
+  pivot_longer(cols = 4:51, 
+               names_to = "Sample_ID",
+               values_to = "FPKM") %>% #Pivoting the data to then change to log2
+  mutate(FPKM = ifelse(FPKM == 0, 1, FPKM), #Changing the 0s to 1s so log2 doesnt end up at negative infinity
+         FPKM_log2 = log2(FPKM)) %>% #log2 function
+  rename(Gene_ID = genes_fpkm_with_protein_charact) %>% #renaming columns
+  select(c(-Protein_Function, -locus, -FPKM)) %>% #selecting columns
+  pivot_wider(names_from = Sample_ID, #pivoting back to workable data frame for PCA
+              values_from = FPKM_log2) %>%
+  select(-Gene_ID) %>% #removing the geneID column
+  plotMDS(gene.selection= "common", #selects the same genes for all comparisons
+          )
+
+#Principal components analysis (PCA)
+genes_fpkm %>%
+  rename(HabP1_R1_ = HabP1_R1_001,HabP1_R2_001 = HabP1_R2_001,JalP1_R1_001 = JalP1_R1_001, JalP1_R2_001 = JalP1_R2_001,SerP1_R1_001 = SerP1_R1_001,SerP1_R2_001 = SerP1_R2_001,WaxP1_R1_001 = WaxP1_R1_001,WaxP1_R2_001 = WaxP1_R2_001,CheP1_R1_001 = CheP1.LCL3435_L3_R1_001,CheP1_R2_001 = CheP1.LCL3435_L3_R2_001,CheP2_R1_001 = CheP2.LCL3437_L3_R1_001,CheP2_R2_001 = CheP2.LCL3437_L3_R2_001,CheS1_R1_001 = CheS1.LCL3434_L3_R1_001,CheS1_R2_001 = CheS1.LCL3434_L3_R2_001,CheS2_R1_001 = CheS2.LCL3436_L3_R1_001,CheS2_R2_001 = CheS2.LCL3436_L3_R2_001,GhoP1_R1_001 = GhoP1.LCL3453_L3_R1_001,GhoP1_R2_001 = GhoP1.LCL3453_L3_R2_001,GhoS1_R1_001 = GhoS1.LCL3452_L3_R1_001,GhoS2_R2_001 = GhoS1.LCL3452_L3_R2_001,HabP2_R1_001 = HabP2.LCL3451_L3_R1_001,HabP2_R2_001 = HabP2.LCL3451_L3_R2_001,HabS1_R1_001 = HabS1.LCL3448_L3_R1_001,HabS1_R2_001 = HabS1.LCL3448_L3_R2_001,HabS2_R1_001 = HabS2.LCL3450_L3_R1_001,HabS2_R2_001 = HabS2.LCL3450_L3_R2_001,JalS1_R1_001 = JalS1.LCL3442_L3_R1_001,JalS1_R2_001 = JalS1.LCL3442_L3_R2_001,CayP2_R1_001 = CayP2.LCL3431_L3_R1_001,CayP2_R2_001 = CayP2.LCL3431_L3_R2_001,CayP3_R1_001 = CayP3.LCL3433_L3_R1_001,CayP3_R2_001 = CayP3.LCL3433_L3_R2_001,CayS1_R1_001 = CayS1.LCL3430_L3_R1_001,CayS1_R2_001 = CayS1.LCL3430_L3_R2_001,CayS3_R1_001 = CayS3.LCL3432_L3_R1_001,CayS3_R2_001 = CayS3.LCL3432_L3_R2_001,SerP2_R1_001 = SerP2.LCL3447_L3_R1_001,SerP2_R2_001 = SerP2.LCL3447_L3_R2_001,SerS1_R1_001 = SerS1.LCL3444_L3_R1_001,SerS1_R2_001 = SerS1.LCL3444_L3_R2_001,SerS2_R1_001 = SerS2.LCL3446_L3_R1_001,SerS2_R2_001 = SerS2.LCL3446_L3_R2_001,WaxP2_R1_001 = WaxP2.LCL3441_L3_R1_001,WaxP2_R2_001 = WaxP2.LCL3441_L3_R2_001,WaxS1_R1_001 = WaxS1.LCL3438_L3_R1_001,WaxS1_R2_001 = WaxS1.LCL3438_L3_R2_001,WaxS2_R1_001 = WaxS2.LCL3440_L3_R1_001,WaxS2_R2_001 = WaxS2.LCL3440_L3_R2_001) %>% #Renaming the peppernames to their shortened abbreviations
+  select(-genes_fpkm_with_protein_charact, -Protein_Function, -locus) %>%
+  plotMDS(gene.selection= "common", #selects the same genes for all comparisons
+          pch = 5, #changing plotting points
+          cex = 1) #changing size of points
+          
+          
 
 
+#Log2 Principal components analysis (PCoA = LogFC dim)
+genes_fpkm %>%
+  rename(HabP1_R1_ = HabP1_R1_001,HabP1_R2_001 = HabP1_R2_001,JalP1_R1_001 = JalP1_R1_001, JalP1_R2_001 = JalP1_R2_001,SerP1_R1_001 = SerP1_R1_001,SerP1_R2_001 = SerP1_R2_001,WaxP1_R1_001 = WaxP1_R1_001,WaxP1_R2_001 = WaxP1_R2_001,CheP1_R1_001 = CheP1.LCL3435_L3_R1_001,CheP1_R2_001 = CheP1.LCL3435_L3_R2_001,CheP2_R1_001 = CheP2.LCL3437_L3_R1_001,CheP2_R2_001 = CheP2.LCL3437_L3_R2_001,CheS1_R1_001 = CheS1.LCL3434_L3_R1_001,CheS1_R2_001 = CheS1.LCL3434_L3_R2_001,CheS2_R1_001 = CheS2.LCL3436_L3_R1_001,CheS2_R2_001 = CheS2.LCL3436_L3_R2_001,GhoP1_R1_001 = GhoP1.LCL3453_L3_R1_001,GhoP1_R2_001 = GhoP1.LCL3453_L3_R2_001,GhoS1_R1_001 = GhoS1.LCL3452_L3_R1_001,GhoS2_R2_001 = GhoS1.LCL3452_L3_R2_001,HabP2_R1_001 = HabP2.LCL3451_L3_R1_001,HabP2_R2_001 = HabP2.LCL3451_L3_R2_001,HabS1_R1_001 = HabS1.LCL3448_L3_R1_001,HabS1_R2_001 = HabS1.LCL3448_L3_R2_001,HabS2_R1_001 = HabS2.LCL3450_L3_R1_001,HabS2_R2_001 = HabS2.LCL3450_L3_R2_001,JalS1_R1_001 = JalS1.LCL3442_L3_R1_001,JalS1_R2_001 = JalS1.LCL3442_L3_R2_001,CayP2_R1_001 = CayP2.LCL3431_L3_R1_001,CayP2_R2_001 = CayP2.LCL3431_L3_R2_001,CayP3_R1_001 = CayP3.LCL3433_L3_R1_001,CayP3_R2_001 = CayP3.LCL3433_L3_R2_001,CayS1_R1_001 = CayS1.LCL3430_L3_R1_001,CayS1_R2_001 = CayS1.LCL3430_L3_R2_001,CayS3_R1_001 = CayS3.LCL3432_L3_R1_001,CayS3_R2_001 = CayS3.LCL3432_L3_R2_001,SerP2_R1_001 = SerP2.LCL3447_L3_R1_001,SerP2_R2_001 = SerP2.LCL3447_L3_R2_001,SerS1_R1_001 = SerS1.LCL3444_L3_R1_001,SerS1_R2_001 = SerS1.LCL3444_L3_R2_001,SerS2_R1_001 = SerS2.LCL3446_L3_R1_001,SerS2_R2_001 = SerS2.LCL3446_L3_R2_001,WaxP2_R1_001 = WaxP2.LCL3441_L3_R1_001,WaxP2_R2_001 = WaxP2.LCL3441_L3_R2_001,WaxS1_R1_001 = WaxS1.LCL3438_L3_R1_001,WaxS1_R2_001 = WaxS1.LCL3438_L3_R2_001,WaxS2_R1_001 = WaxS2.LCL3440_L3_R1_001,WaxS2_R2_001 = WaxS2.LCL3440_L3_R2_001) %>% #Renaming the peppernames to their shortened abbreviations
+  pivot_longer(cols = 4:51, 
+               names_to = "Sample_ID",
+               values_to = "FPKM") %>% #Pivoting the data to then change to log2
+  mutate(FPKM = ifelse(FPKM == 0, 1, FPKM), #Changing the 0s to 1s so log2 doesnt end up at negative infinity
+         FPKM_log2 = log2(FPKM)) %>% #log2 function
+  rename(Gene_ID = genes_fpkm_with_protein_charact) %>% #renaming columns
+  select(c(-Protein_Function, -locus, -FPKM)) %>% #selecting columns
+  pivot_wider(names_from = Sample_ID, #pivoting back to workable data frame for PCA
+              values_from = FPKM_log2) %>%
+  select(-Gene_ID) %>% #removing the geneID column
+  plotMDS(gene.selection= "pariwise", #chooses the top genes separatley for each pariwise comparison between samples
+          )
+  
+#Principal components of Analysis (PCoA = LogFC dim)
+genes_fpkm %>%
+  rename(HabP1_R1_ = HabP1_R1_001,HabP1_R2_001 = HabP1_R2_001,JalP1_R1_001 = JalP1_R1_001, JalP1_R2_001 = JalP1_R2_001,SerP1_R1_001 = SerP1_R1_001,SerP1_R2_001 = SerP1_R2_001,WaxP1_R1_001 = WaxP1_R1_001,WaxP1_R2_001 = WaxP1_R2_001,CheP1_R1_001 = CheP1.LCL3435_L3_R1_001,CheP1_R2_001 = CheP1.LCL3435_L3_R2_001,CheP2_R1_001 = CheP2.LCL3437_L3_R1_001,CheP2_R2_001 = CheP2.LCL3437_L3_R2_001,CheS1_R1_001 = CheS1.LCL3434_L3_R1_001,CheS1_R2_001 = CheS1.LCL3434_L3_R2_001,CheS2_R1_001 = CheS2.LCL3436_L3_R1_001,CheS2_R2_001 = CheS2.LCL3436_L3_R2_001,GhoP1_R1_001 = GhoP1.LCL3453_L3_R1_001,GhoP1_R2_001 = GhoP1.LCL3453_L3_R2_001,GhoS1_R1_001 = GhoS1.LCL3452_L3_R1_001,GhoS2_R2_001 = GhoS1.LCL3452_L3_R2_001,HabP2_R1_001 = HabP2.LCL3451_L3_R1_001,HabP2_R2_001 = HabP2.LCL3451_L3_R2_001,HabS1_R1_001 = HabS1.LCL3448_L3_R1_001,HabS1_R2_001 = HabS1.LCL3448_L3_R2_001,HabS2_R1_001 = HabS2.LCL3450_L3_R1_001,HabS2_R2_001 = HabS2.LCL3450_L3_R2_001,JalS1_R1_001 = JalS1.LCL3442_L3_R1_001,JalS1_R2_001 = JalS1.LCL3442_L3_R2_001,CayP2_R1_001 = CayP2.LCL3431_L3_R1_001,CayP2_R2_001 = CayP2.LCL3431_L3_R2_001,CayP3_R1_001 = CayP3.LCL3433_L3_R1_001,CayP3_R2_001 = CayP3.LCL3433_L3_R2_001,CayS1_R1_001 = CayS1.LCL3430_L3_R1_001,CayS1_R2_001 = CayS1.LCL3430_L3_R2_001,CayS3_R1_001 = CayS3.LCL3432_L3_R1_001,CayS3_R2_001 = CayS3.LCL3432_L3_R2_001,SerP2_R1_001 = SerP2.LCL3447_L3_R1_001,SerP2_R2_001 = SerP2.LCL3447_L3_R2_001,SerS1_R1_001 = SerS1.LCL3444_L3_R1_001,SerS1_R2_001 = SerS1.LCL3444_L3_R2_001,SerS2_R1_001 = SerS2.LCL3446_L3_R1_001,SerS2_R2_001 = SerS2.LCL3446_L3_R2_001,WaxP2_R1_001 = WaxP2.LCL3441_L3_R1_001,WaxP2_R2_001 = WaxP2.LCL3441_L3_R2_001,WaxS1_R1_001 = WaxS1.LCL3438_L3_R1_001,WaxS1_R2_001 = WaxS1.LCL3438_L3_R2_001,WaxS2_R1_001 = WaxS2.LCL3440_L3_R1_001,WaxS2_R2_001 = WaxS2.LCL3440_L3_R2_001) %>% #Renaming the peppernames to their shortened abbreviations
+  select(-genes_fpkm_with_protein_charact, -Protein_Function, -locus) %>%
+  plotMDS(gene.selection= "pairwise")
 
-
-
-
+```
