@@ -21,12 +21,17 @@ library(lattice)
 library(patchwork)
 library(corrplot)
 library(MQMF)
+
+if (!requireNamespace("BiocManager", quietly = TRUE))
+    install.packages("BiocManager")
+BiocManager::install("Glimma")
+
 library(limma)
 library(Glimma)
 
-setwd("/Users/Caronelab/Desktop/Spicy_Pepper_Project/R_Workflow") #Lab Computer
+#setwd("/Users/Caronelab/Desktop/Spicy_Pepper_Project/R_Workflow") #Lab Computer
 #setwd("/Users/nickpaterna/Repositories/Spicy_Pepper_Project/R_Workflow") #Nick's MacBook
-#setwd("/Users/calhoun/Repositories/Spicy_Pepper_Project") #Ryan's MacBook
+setwd("/Users/calhoun/Repositories/Spicy_Pepper_Project/R_Workflow") #Ryan's MacBook
 
 ```
 
@@ -64,6 +69,21 @@ trimmed_tidy <- final_tidy %>%
   select(-Forward) %>% #Removes logic col now that we have actual direction
   mutate(Sample_ID = str_sub(Sample_ID,1, 5))
 
+
+splom_object <- genes_fpkm %>%
+  pivot_longer(cols = 4:51,
+               names_to = "Sample_ID",
+               values_to = "FPKM") %>%
+  mutate(FPKM = ifelse(FPKM == 0, 1, FPKM), 
+         FPKM_log2 = log2(FPKM)) %>%
+  mutate(Sample_ID = str_sub(Sample_ID, 1, -5)) %>%
+  rename(Gene_ID = genes_fpkm_with_protein_charact) %>%
+  select(c(-Protein_Function, -locus, -FPKM)) %>%
+  pivot_wider(names_from = Sample_ID,
+              values_from = FPKM_log2) %>%
+  rename(HabP1_R1 = HabP1_R1,HabP1_R2 = HabP1_R2,JalP1_R1 = JalP1_R1, JalP1_R2 = JalP1_R2,SerP1_R1 = SerP1_R1,SerP1_R2 = SerP1_R2,WaxP1_R1 = WaxP1_R1,WaxP1_R2 = WaxP1_R2,CheP1_R1 = CheP1.LCL3435_L3_R1,CheP1_R2 = CheP1.LCL3435_L3_R2,CheP2_R1 = CheP2.LCL3437_L3_R1,CheP2_R2 = CheP2.LCL3437_L3_R2,CheS1_R1 = CheS1.LCL3434_L3_R1,CheS1_R2 = CheS1.LCL3434_L3_R2,CheS2_R1 = CheS2.LCL3436_L3_R1,CheS2_R2 = CheS2.LCL3436_L3_R2,GhoP1_R1 = GhoP1.LCL3453_L3_R1,GhoP1_R2 = GhoP1.LCL3453_L3_R2,GhoS1_R1 = GhoS1.LCL3452_L3_R1,GhoS2_R2 = GhoS1.LCL3452_L3_R2,HabP2_R1 = HabP2.LCL3451_L3_R1,HabP2_R2 = HabP2.LCL3451_L3_R2,HabS1_R1 = HabS1.LCL3448_L3_R1,HabS1_R2 = HabS1.LCL3448_L3_R2,HabS2_R1 = HabS2.LCL3450_L3_R1,HabS2_R2 = HabS2.LCL3450_L3_R2,JalS1_R1 = JalS1.LCL3442_L3_R1,JalS1_R2 = JalS1.LCL3442_L3_R2,CayP2_R1 = CayP2.LCL3431_L3_R1,CayP2_R2 = CayP2.LCL3431_L3_R2,CayP3_R1 = CayP3.LCL3433_L3_R1,CayP3_R2 = CayP3.LCL3433_L3_R2,CayS1_R1 = CayS1.LCL3430_L3_R1,CayS1_R2 = CayS1.LCL3430_L3_R2,CayS3_R1 = CayS3.LCL3432_L3_R1,CayS3_R2 = CayS3.LCL3432_L3_R2,SerP2_R1 = SerP2.LCL3447_L3_R1,SerP2_R2 = SerP2.LCL3447_L3_R2,SerS1_R1 = SerS1.LCL3444_L3_R1,SerS1_R2 = SerS1.LCL3444_L3_R2,SerS2_R1 = SerS2.LCL3446_L3_R1,SerS2_R2 = SerS2.LCL3446_L3_R2,WaxP2_R1 = WaxP2.LCL3441_L3_R1,WaxP2_R2 = WaxP2.LCL3441_L3_R2,WaxS1_R1 = WaxS1.LCL3438_L3_R1,WaxS1_R2 = WaxS1.LCL3438_L3_R2,WaxS2_R1 = WaxS2.LCL3440_L3_R1,WaxS2_R2 = WaxS2.LCL3440_L3_R2)
+
+
 ```
 
 ##Creating bar graph of Mapped Libraries
@@ -71,19 +91,23 @@ trimmed_tidy <- final_tidy %>%
 
 ```{r Bar Graph of Mapped Reads}
 
-  trimmed_tidy %>%
-  filter(Direction == "Forward") %>% #Removes duplicate libraries
-  ggplot(aes(x = Sample_ID, y = Mapped_Reads, fill = Pepper_Name)) +
-  geom_col() + theme_bw() +
-  scale_fill_brewer(palette = "Accent") +
-  theme(axis.text.x = element_text(angle = 45,
-                                   hjust = 1)) +
-  geom_text(aes(label = Mapped_Reads)) +
-  labs(x = "Sample ID",
-       y = "Mapped Reads",
-       fill = "Pepper Name",
-       title = "Mapped Reads per Sample")
-  
+#The code kept getting held up so i commented it out momentarily
+
+# trimmed_tidy %>%
+# filter(Direction == "Forward") %>% 
+#   view() 
+# #Removes duplicate libraries
+# ggplot(aes(x = Sample_ID, y = Mapped_Reads, fill = Pepper_Name)) +
+# geom_col() + theme_bw() +
+# scale_fill_brewer(palette = "Accent") +
+# theme(axis.text.x = element_text(angle = 45,
+#                                  hjust = 1)) +
+# geom_text(aes(label = Mapped_Reads)) +
+# labs(x = "Sample ID",
+#      y = "Mapped Reads",
+#      fill = "Pepper Name",
+#      title = "Mapped Reads per Sample")
+
 
 ```
 
@@ -150,81 +174,80 @@ naming_function <- function()
 
 
 ```{r PCA of Pepper Samples}
-
-sample_pca <- genes_fpkm %>%
-  pivot_longer(cols = 4:51,
-               names_to = "Sample_ID",
-               values_to = "FPKM") %>%
-  mutate(FPKM = ifelse(FPKM == 0, 1, FPKM), 
-         FPKM_log2 = log2(FPKM)) %>%
-  mutate(Sample_ID = str_sub(Sample_ID, 1, -5)) %>%
-  rename(Gene_ID = genes_fpkm_with_protein_charact) %>%
-  select(c(-Protein_Function, -locus, -FPKM)) %>%
-  pivot_wider(names_from = Sample_ID,
-              values_from = FPKM_log2) %>%
-  select(-Gene_ID) %>%
-  scale() %>%
-  prcomp()
-
-
-#### Using dplyr to manipulate the data we have into a format we want ####
-
-sample_identity <- final_tidy %>% select(Sample_ID, Pepper_Name, Tissue) %>% unique()
-
-pre_pca <- genes_fpkm %>%
-  pivot_longer(cols = 4:51,
-               names_to = "Sample_ID",
-               values_to = "FPKM") %>%
-  mutate(FPKM = ifelse(FPKM == 0, 1, FPKM), 
-         FPKM_log2 = log2(FPKM)) %>%
-  rename(Gene_ID = genes_fpkm_with_protein_charact) %>%
-  select(c(-Protein_Function, -locus, -FPKM)) %>%
-  pivot_wider(names_from = Gene_ID,
-              values_from = FPKM_log2) %>%
-  left_join(sample_identity) %>%
-  mutate(Sample_ID = str_sub(Sample_ID, 1, -5))
-
-#### Running the PCA ####
-pre_pca %>%
-  select(-Sample_ID, -Pepper_Name, -Tissue) %>%
-  scale() %>% #Normalizes data for clustering
-  prcomp() -> pepper_pca
-
-#### Plotting PC1 v PC2 ####
-as_tibble(pepper_pca$x) %>% #Generates table
-  mutate(Sample_ID = pre_pca$Sample_ID,
-         Pepper_Name = pre_pca$Pepper_Name) %>%
-  ggplot(aes(x = PC1, y = PC2, color = Pepper_Name)) +
-  geom_point(size = 1,
-             alpha=0.5) +
-  theme_bw()
-
-#### Plotting PC1 v PC3 ####
-as_tibble(pepper_pca$x) %>% #Generates table
-  mutate(Tissue = ifelse(str_detect(Sample_ID, "P"), "Placenta", "Skin")) %>%
-  mutate(Direction = ifelse(str_detect(Sample_ID, "R1"), "Forward", "Reverse")) %>%
-  ggplot(aes(x = PC1, y = PC3, color = Tissue)) +
-  geom_point() + theme_bw()
-
-#### Plotting PC2 v PC3 ####
-as_tibble(pepper_pca$rotation) %>% #Generates table
-  mutate(Tissue = ifelse(str_detect(Sample_ID, "P"), "Placenta", "Skin")) %>%
-  mutate(Direction = ifelse(str_detect(Sample_ID, "R1"), "Forward", "Reverse")) %>%
-  ggplot(aes(x = PC2, y = PC3, color = Direction)) +
-  geom_point() + theme_bw()
-
-  
-#### Creating a Scree Plot to show PC variation ####
-  var_explained = pepper_pca$sdev^2 / sum(pepper_pca$sdev^2) #Defining the amount of variation explained by each PC
-
-
-  qplot(c(1:48), var_explained) + #Using qplot to quickly select info out of a value
-  geom_line() + geom_text(aes(label = pepper_pca$x)) +
-  xlab("Principal Component") + 
-  ylab("Variance Explained") +
-  ggtitle("Scree Plot") +
-  ylim(0, 1) +
-  theme_bw()
+# sample_pca <- genes_fpkm %>%
+#   pivot_longer(cols = 4:51,
+#                names_to = "Sample_ID",
+#                values_to = "FPKM") %>%
+#   mutate(FPKM = ifelse(FPKM == 0, 1, FPKM), 
+#          FPKM_log2 = log2(FPKM)) %>%
+#   mutate(Sample_ID = str_sub(Sample_ID, 1, -5)) %>%
+#   rename(Gene_ID = genes_fpkm_with_protein_charact) %>%
+#   select(c(-Protein_Function, -locus, -FPKM)) %>%
+#   pivot_wider(names_from = Sample_ID,
+#               values_from = FPKM_log2) %>%
+#   select(-Gene_ID) %>%
+#   scale() %>%
+#   prcomp()
+# 
+# 
+# #### Using dplyr to manipulate the data we have into a format we want ####
+# 
+# sample_identity <- final_tidy %>% select(Sample_ID, Pepper_Name, Tissue) %>% unique()
+# 
+# pre_pca <- genes_fpkm %>%
+#   pivot_longer(cols = 4:51,
+#                names_to = "Sample_ID",
+#                values_to = "FPKM") %>%
+#   mutate(FPKM = ifelse(FPKM == 0, 1, FPKM), 
+#          FPKM_log2 = log2(FPKM)) %>%
+#   rename(Gene_ID = genes_fpkm_with_protein_charact) %>%
+#   select(c(-Protein_Function, -locus, -FPKM)) %>%
+#   pivot_wider(names_from = Gene_ID,
+#               values_from = FPKM_log2) %>%
+#   left_join(sample_identity) %>%
+#   mutate(Sample_ID = str_sub(Sample_ID, 1, -5))
+# 
+# #### Running the PCA ####
+# pre_pca %>%
+#   select(-Sample_ID, -Pepper_Name, -Tissue) %>%
+#   scale() %>% #Normalizes data for clustering
+#   prcomp() -> pepper_pca
+# 
+# #### Plotting PC1 v PC2 ####
+# as_tibble(pepper_pca$x) %>% #Generates table
+#   mutate(Sample_ID = pre_pca$Sample_ID,
+#          Pepper_Name = pre_pca$Pepper_Name) %>%
+#   ggplot(aes(x = PC1, y = PC2, color = Pepper_Name)) +
+#   geom_point(size = 1,
+#              alpha=0.5) +
+#   theme_bw()
+# 
+# #### Plotting PC1 v PC3 ####
+# as_tibble(pepper_pca$x) %>% #Generates table
+#   mutate(Tissue = ifelse(str_detect(Sample_ID, "P"), "Placenta", "Skin")) %>%
+#   mutate(Direction = ifelse(str_detect(Sample_ID, "R1"), "Forward", "Reverse")) %>%
+#   ggplot(aes(x = PC1, y = PC3, color = Tissue)) +
+#   geom_point() + theme_bw()
+# 
+# #### Plotting PC2 v PC3 ####
+# as_tibble(pepper_pca$rotation) %>% #Generates table
+#   mutate(Tissue = ifelse(str_detect(Sample_ID, "P"), "Placenta", "Skin")) %>%
+#   mutate(Direction = ifelse(str_detect(Sample_ID, "R1"), "Forward", "Reverse")) %>%
+#   ggplot(aes(x = PC2, y = PC3, color = Direction)) +
+#   geom_point() + theme_bw()
+# 
+#   
+# #### Creating a Scree Plot to show PC variation ####
+#   var_explained = pepper_pca$sdev^2 / sum(pepper_pca$sdev^2) #Defining the amount of variation explained by each PC
+# 
+# 
+#   qplot(c(1:48), var_explained) + #Using qplot to quickly select info out of a value
+#   geom_line() + geom_text(aes(label = pepper_pca$x)) +
+#   xlab("Principal Component") + 
+#   ylab("Variance Explained") +
+#   ggtitle("Scree Plot") +
+#   ylim(0, 1) +
+#   theme_bw()
 
 ```
 
@@ -238,20 +261,6 @@ Creating a scatter plot that plots the FPKM values for a forward run sample agai
 
 sample_cols <- c("HabP1_R1 = HabP1_R1,HabP1_R2 = HabP1_R2,JalP1_R1 = JalP1_R1, JalP1_R2 = JalP1_R2,SerP1_R1 = SerP1_R1,SerP1_R2 = SerP1_R2,WaxP1_R1 = WaxP1_R1,WaxP1_R2 = WaxP1_R2,CheP1_R1 = CheP1.LCL3435_L3_R1,CheP1_R2 = CheP1.LCL3435_L3_R2,CheP2_R1 = CheP2.LCL3437_L3_R1,CheP2_R2 = CheP2.LCL3437_L3_R2,CheS1_R1 = CheS1.LCL3434_L3_R1,CheS1_R2 = CheS1.LCL3434_L3_R2,CheS2_R1 = CheS2.LCL3436_L3_R1,CheS2_R2 = CheS2.LCL3436_L3_R2,GhoP1_R1 = GhoP1.LCL3453_L3_R1,GhoP1_R2 = GhoP1.LCL3453_L3_R2,GhoS1_R1 = GhoS1.LCL3452_L3_R1,GhoS2_R2 = GhoS1.LCL3452_L3_R2,HabP2_R1 = HabP2.LCL3451_L3_R1,HabP2_R2 = HabP2.LCL3451_L3_R2,HabS1_R1 = HabS1.LCL3448_L3_R1,HabS1_R2 = HabS1.LCL3448_L3_R2,HabS2_R1 = HabS2.LCL3450_L3_R1,HabS2_R2 = HabS2.LCL3450_L3_R2,JalS1_R1 = JalS1.LCL3442_L3_R1,JalS1_R2 = JalS1.LCL3442_L3_R2,CayP2_R1 = CayP2.LCL3431_L3_R1,CayP2_R2 = CayP2.LCL3431_L3_R2,CayP3_R1 = CayP3.LCL3433_L3_R1,CayP3_R2 = CayP3.LCL3433_L3_R2,CayS1_R1 = CayS1.LCL3430_L3_R1,CayS1_R2 = CayS1.LCL3430_L3_R2,CayS3_R1 = CayS3.LCL3432_L3_R1,CayS3_R2 = CayS3.LCL3432_L3_R2,SerP2_R1 = SerP2.LCL3447_L3_R1,SerP2_R2 = SerP2.LCL3447_L3_R2,SerS1_R1 = SerS1.LCL3444_L3_R1,SerS1_R2 = SerS1.LCL3444_L3_R2,SerS2_R1 = SerS2.LCL3446_L3_R1,SerS2_R2 = SerS2.LCL3446_L3_R2,WaxP2_R1 = WaxP2.LCL3441_L3_R1,WaxP2_R2 = WaxP2.LCL3441_L3_R2,WaxS1_R1 = WaxS1.LCL3438_L3_R1,WaxS1_R2 = WaxS1.LCL3438_L3_R2,WaxS2_R1 = WaxS2.LCL3440_L3_R1,WaxS2_R2 = WaxS2.LCL3440_L3_R2")
 
-
-
-splom_object <- genes_fpkm %>%
-  pivot_longer(cols = 4:51,
-               names_to = "Sample_ID",
-               values_to = "FPKM") %>%
-  mutate(FPKM = ifelse(FPKM == 0, 1, FPKM), 
-         FPKM_log2 = log2(FPKM)) %>%
-  mutate(Sample_ID = str_sub(Sample_ID, 1, -5)) %>%
-  rename(Gene_ID = genes_fpkm_with_protein_charact) %>%
-  select(c(-Protein_Function, -locus, -FPKM)) %>%
-  pivot_wider(names_from = Sample_ID,
-              values_from = FPKM_log2) %>%
-  rename(HabP1_R1 = HabP1_R1,HabP1_R2 = HabP1_R2,JalP1_R1 = JalP1_R1, JalP1_R2 = JalP1_R2,SerP1_R1 = SerP1_R1,SerP1_R2 = SerP1_R2,WaxP1_R1 = WaxP1_R1,WaxP1_R2 = WaxP1_R2,CheP1_R1 = CheP1.LCL3435_L3_R1,CheP1_R2 = CheP1.LCL3435_L3_R2,CheP2_R1 = CheP2.LCL3437_L3_R1,CheP2_R2 = CheP2.LCL3437_L3_R2,CheS1_R1 = CheS1.LCL3434_L3_R1,CheS1_R2 = CheS1.LCL3434_L3_R2,CheS2_R1 = CheS2.LCL3436_L3_R1,CheS2_R2 = CheS2.LCL3436_L3_R2,GhoP1_R1 = GhoP1.LCL3453_L3_R1,GhoP1_R2 = GhoP1.LCL3453_L3_R2,GhoS1_R1 = GhoS1.LCL3452_L3_R1,GhoS2_R2 = GhoS1.LCL3452_L3_R2,HabP2_R1 = HabP2.LCL3451_L3_R1,HabP2_R2 = HabP2.LCL3451_L3_R2,HabS1_R1 = HabS1.LCL3448_L3_R1,HabS1_R2 = HabS1.LCL3448_L3_R2,HabS2_R1 = HabS2.LCL3450_L3_R1,HabS2_R2 = HabS2.LCL3450_L3_R2,JalS1_R1 = JalS1.LCL3442_L3_R1,JalS1_R2 = JalS1.LCL3442_L3_R2,CayP2_R1 = CayP2.LCL3431_L3_R1,CayP2_R2 = CayP2.LCL3431_L3_R2,CayP3_R1 = CayP3.LCL3433_L3_R1,CayP3_R2 = CayP3.LCL3433_L3_R2,CayS1_R1 = CayS1.LCL3430_L3_R1,CayS1_R2 = CayS1.LCL3430_L3_R2,CayS3_R1 = CayS3.LCL3432_L3_R1,CayS3_R2 = CayS3.LCL3432_L3_R2,SerP2_R1 = SerP2.LCL3447_L3_R1,SerP2_R2 = SerP2.LCL3447_L3_R2,SerS1_R1 = SerS1.LCL3444_L3_R1,SerS1_R2 = SerS1.LCL3444_L3_R2,SerS2_R1 = SerS2.LCL3446_L3_R1,SerS2_R2 = SerS2.LCL3446_L3_R2,WaxP2_R1 = WaxP2.LCL3441_L3_R1,WaxP2_R2 = WaxP2.LCL3441_L3_R2,WaxS1_R1 = WaxS1.LCL3438_L3_R1,WaxS1_R2 = WaxS1.LCL3438_L3_R2,WaxS2_R1 = WaxS2.LCL3440_L3_R1,WaxS2_R2 = WaxS2.LCL3440_L3_R2)
 
   # splom(splom_object[c(4,5,28,29)],
   #       par.settings =simpleTheme(col="magenta4"),
@@ -273,7 +282,7 @@ splom_object %>%
         font.labels = 2, #changes sample label size
         main = "Jalapeno Pepper FPKM values", #graph title
         pch = ".", #graph point size
-        col = "yellow2") #changes point color
+        col = "palegreen2") #changes point color
 
 #Creates Serrrano Scatterplot
 splom_object %>%
@@ -282,7 +291,7 @@ splom_object %>%
         font.labels = 2, #changes sample label size
         main = "Serrano Pepper FPKM values", #graph title
         pch = ".", #graph point size
-        col = "chartreuse4") #changes point color
+        col = "peachpuff") #changes point color
 
 #Creates Habanero Scatterplot
 splom_object %>%
@@ -291,7 +300,7 @@ splom_object %>%
         font.labels = 2, #changes sample label size
         main = "Habanero Pepper FPKM values", #graph title
         pch = ".", #graph point size
-        col = "darkorange1") #changes point color
+        col = "darkorange") #changes point color
 
 #Creates Hungarian Wax Scatterplot
 splom_object %>%
@@ -300,7 +309,7 @@ splom_object %>%
         font.labels = 2, #changes sample label size
         main = "Hungarian Wax Pepper FPKM values", #graph title
         pch = ".", #graph point size
-        col = "lightgreen") #changes point color
+        col = "darkolivegreen") #changes point color
 
 #Creates Cayenne Scatterplot
 splom_object %>%
@@ -309,7 +318,7 @@ splom_object %>%
         font.labels = 2, #changes sample label size
         main = "Cayenne Pepper FPKM values", #graph title
         pch = ".", #graph point size
-        col = "goldenrod1") #changes point color
+        col = "gold1") #changes point color
 
 #Creates Ghost Scatterplot
 splom_object %>%
@@ -327,7 +336,7 @@ splom_object %>%
         font.labels = 2, #changes sample label size
         main = "Cherry Pepper FPKM values", #graph title
         pch = ".", #graph point size
-        col = "chartreuse1") #changes point color
+        col = "chartreuse4") #changes point color
 
 ```
 
@@ -336,19 +345,19 @@ splom_object %>%
 Creating a heatmap to show the top highly expressed genes utilizing their FPKM values
 
 ```{r HeatMap of FPKM values}
-genes_fpkm %>%
-  pivot_longer(cols = 4:51,
-               names_to = "Sample_ID",
-               values_to = "FPKM") %>%
-  mutate(FPKM = ifelse(FPKM == 0, 1, FPKM), 
-         FPKM_log2 = log2(FPKM)) %>%
-  mutate(Sample_ID = str_sub(Sample_ID, 1, -5)) %>%
-  rename(Gene_ID = genes_fpkm_with_protein_charact) %>%
-  select(c(-Protein_Function, -locus, -FPKM)) %>%
-  pivot_wider(names_from = Sample_ID,
-              values_from = FPKM_log2) %>%
-  select(-Gene_ID) %>%
-  heatmap(as.matrix())
+# genes_fpkm %>%
+#   pivot_longer(cols = 4:51,
+#                names_to = "Sample_ID",
+#                values_to = "FPKM") %>%
+#   mutate(FPKM = ifelse(FPKM == 0, 1, FPKM), 
+#          FPKM_log2 = log2(FPKM)) %>%
+#   mutate(Sample_ID = str_sub(Sample_ID, 1, -5)) %>%
+#   rename(Gene_ID = genes_fpkm_with_protein_charact) %>%
+#   select(c(-Protein_Function, -locus, -FPKM)) %>%
+#   pivot_wider(names_from = Sample_ID,
+#               values_from = FPKM_log2) %>%
+#   select(-Gene_ID) %>%
+#   heatmap(as.matrix())
 
 ```
 
@@ -359,49 +368,51 @@ genes_fpkm %>%
 
 #Creating Ryan's color palettes for the scale
 
-ryan_pal <- colorRampPalette(c("#7FD1B9", "#AAE5D3", "#CEF0E6", "#E7F6F7"))
-ryan_pal2 <- colorRampPalette(c("#E7F6F7", "#CEF0E6", "#AAE5D3", "#7FD1B9"))
-ryan_pal3 <- colorRampPalette(c( "#84dcc6","#d6edff","#acd7ec","#8b95c9","#478978"))
+#ryan_pal <- colorRampPalette(c("#7FD1B9", "#AAE5D3", "#CEF0E6", "#E7F6F7"))
+#ryan_pal2 <- colorRampPalette(c("#E7F6F7", "#CEF0E6", "#AAE5D3", "#7FD1B9"))
+#ryan_pal3 <- colorRampPalette(c( "#84dcc6","#d6edff", "#8b95c9","#478978"))
 ryan_pal4 <- colorRampPalette(c("#FE5F55", "#ECABA8", "#D9F7FA", "#2292A4"))
-ryan_pal5 <- colorRampPalette(c("#016FB9", "#F3DFC1", "#368F8B"))
+ryan_pal8 <- colorRampPalette(c("#2292A4", "#D9F7FA", "#ECABA8", "#FE5F55"))
+ryan_pal5 <- colorRampPalette(c("#FE5F55", "#D9F7FA", "#236A80", "#2292A4"))
 
 splom_object %>%
-  select(-c(1:3)) %>%
+  select(-Gene_ID) %>%
   cor() %>%
   corrplot(order = "hclust", #Specifies how we arrange data
            method = "square", #Presentation of clusters
            addrect = 8, #Distinguishes groups among clusters
-           rect.col = "black", #Color of groups
+           rect.col = "blue3", #Color of groups
            tl.cex = 0.75, #Label size
            tl.col = "black", #Label colors
            tl.srt = 90, #Angle of labels - TOP
            bg = "white", #Background color
-           cl.lim = c(0,1), #Range of the scale
+           cl.lim = c(0.5,1), #Range of the scale
            cl.ratio = 0.1, #Scale size
            cl.cex = 1, #Scale number size
            is.corr = F, #Whether the range affects the chosen colors
-           col = ryan_pal5(10)) #Specifies color palette
+           col = ryan_pal4(5)) #Specifies color palette
 
 
-ryan_pal6 <- colorRampPalette(c("#FF9B71", "#FFFD82", "#9BBDF9", "#ED217C"))
-ryan_pal7 <- colorRampPalette(c("#F26430", "#F6FEDB", "#7678ED", "#F26430"))
+#ryan_pal6 <- colorRampPalette(c("#FF9B71", "#FFFD82", "#9BBDF9", "#ED217C"))
+#ryan_pal7 <- colorRampPalette(c("#F26430", "#F6FEDB", "#7678ED", "#F26430"))
 
+#Removing wax placenta samples as they seem to interfere with data
 splom_object %>%
-  select(-c(1:3)) %>%
+  select(-c(Gene_ID, WaxP1_R1, WaxP1_R2)) %>%
   cor() %>%
   corrplot(order = "hclust", #Specifies how we arrange data
            method = "square", #Presentation of clusters
            addrect = 8, #Distinguishes groups among clusters
-           rect.col = "maroon2", #Color of groups
+           rect.col = "blue3", #Color of groups
            tl.cex = 0.75, #Label size
            tl.col = "black", #Label colors
            tl.srt = 90, #Angle of labels - TOP
            bg = "white", #Background color
-           cl.lim = c(0,1), #Range of the scale
+           cl.lim = c(0.5,1), #Range of the scale
            cl.ratio = 0.1, #Scale size
            cl.cex = 1, #Scale number size
            is.corr = F, #Whether the range affects the chosen colors
-           col = ryan_pal7(10)) #Specifies color palette
+           col = ryan_pal5(8)) #Specifies color palette
 ```
 
 
